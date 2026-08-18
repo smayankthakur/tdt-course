@@ -116,10 +116,11 @@ img {
   width: 42px;
   height: 42px;
   border-radius: 50%;
+  object-fit: cover;
   border: 2px solid var(--gold);
-  background: radial-gradient(circle at 35% 30%, #b8433f, #7a1f2e 60%, #4a1220 100%);
   box-shadow: 0 0 16px rgba(212, 175, 55, 0.35);
   flex-shrink: 0;
+  background: #150f22;
 }
 
 .brand small {
@@ -229,6 +230,45 @@ img {
   border-radius: 50%;
   background: radial-gradient(circle at 35% 35%, var(--gold-soft), var(--gold) 55%, #8a6b12 100%);
   box-shadow: 0 0 50px rgba(212, 175, 55, 0.5), 0 0 110px rgba(109, 40, 217, 0.3);
+}
+
+.hero-portrait {
+  position: relative;
+  width: 152px;
+  height: 152px;
+  margin-bottom: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.hero-portrait-glow {
+  position: absolute;
+  inset: -30px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(212, 175, 55, 0.35), rgba(109, 40, 217, 0.25) 55%, transparent 75%);
+  filter: blur(6px);
+  animation: pulse-glow 4s ease-in-out infinite;
+}
+
+@keyframes pulse-glow {
+  0%, 100% { opacity: 0.7; transform: scale(1); }
+  50% { opacity: 1; transform: scale(1.06); }
+}
+
+.hero-portrait img {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
+  border: 3px solid var(--gold);
+  box-shadow: 0 0 40px rgba(212, 175, 55, 0.45), 0 12px 30px rgba(0, 0, 0, 0.5);
+  background: #150f22;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-portrait-glow { animation: none; }
 }
 
 .eyebrow {

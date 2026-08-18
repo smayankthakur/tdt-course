@@ -113,8 +113,7 @@ export default function Home() {
       <nav className="navbar">
         <div className="container navbar-inner">
           <a href="https://thedivinetarotonline.com/" className="brand">
-            {/* Placeholder mark — swap for the real logo file (client's deity artwork) */}
-            <span className="mark"></span>
+            <img src="/logo.png" alt="The Divine Tarot" className="mark" />
             <span>
               The Divine Tarot
               <small>Premium Tarot Guidance</small>
@@ -145,7 +144,10 @@ export default function Home() {
 
       {/* HERO */}
       <section className="hero">
-        <div className="moon"></div>
+        <div className="hero-portrait">
+          <div className="hero-portrait-glow"></div>
+          <img src="/logo.png" alt="The Divine Tarot — Bharti Singh" />
+        </div>
         <div className="eyebrow">The Divine Tarot</div>
         <p className="namaste">Namaste, main hu Bharti Singh</p>
         <h1>India&rsquo;s No.1 Psychic Tarot Reader</h1>
@@ -449,7 +451,7 @@ export default function Home() {
         <div className="container footer-grid">
           <div className="footer-brand">
             <a href="https://thedivinetarotonline.com/" className="brand">
-              <span className="mark"></span>
+              <img src="/logo.png" alt="The Divine Tarot" className="mark" />
               <span>
                 The Divine Tarot
                 <small>Premium Tarot Guidance</small>
