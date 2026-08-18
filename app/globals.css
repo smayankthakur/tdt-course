@@ -78,21 +78,25 @@ img {
   html { scroll-behavior: auto; }
 }
 
-/* ---------- nav ---------- */
+/* ---------- nav (matches thedivinetarotonline.com header) ---------- */
 .navbar {
   position: sticky;
   top: 0;
   z-index: 50;
-  backdrop-filter: blur(14px);
-  background: rgba(18, 11, 34, 0.72);
-  border-bottom: 1px solid var(--line);
+  background: #0c0c0e;
+  border-bottom: 1px solid rgba(212, 175, 55, 0.15);
 }
 
 .navbar .container {
+  max-width: 1400px;
+}
+
+.navbar-inner {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  height: 76px;
+  gap: 24px;
+  height: 84px;
 }
 
 .brand {
@@ -100,62 +104,109 @@ img {
   align-items: center;
   gap: 12px;
   font-family: "Cinzel", serif;
-  font-weight: 600;
-  font-size: 18px;
-  letter-spacing: 0.02em;
+  font-weight: 700;
+  font-size: 17px;
+  letter-spacing: 0.01em;
   text-decoration: none;
+  color: var(--ivory);
+  flex-shrink: 0;
 }
 
 .brand .mark {
-  width: 34px;
-  height: 34px;
+  width: 42px;
+  height: 42px;
   border-radius: 50%;
-  background: radial-gradient(circle at 35% 35%, var(--gold-soft), var(--gold) 55%, #8a6b12 100%);
-  box-shadow: 0 0 20px rgba(212, 175, 55, 0.45);
+  border: 2px solid var(--gold);
+  background: radial-gradient(circle at 35% 30%, #b8433f, #7a1f2e 60%, #4a1220 100%);
+  box-shadow: 0 0 16px rgba(212, 175, 55, 0.35);
+  flex-shrink: 0;
 }
 
 .brand small {
   display: block;
   font-family: "Inter", sans-serif;
-  font-weight: 400;
-  font-size: 10.5px;
-  letter-spacing: 0.15em;
-  color: var(--violet-soft);
+  font-weight: 500;
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  color: var(--gold-soft);
   text-transform: uppercase;
+  margin-top: 2px;
 }
 
 .nav-links {
   display: flex;
-  gap: 28px;
-  font-size: 14px;
+  gap: 30px;
+  font-size: 14.5px;
   font-weight: 500;
 }
 
 .nav-links a {
   text-decoration: none;
-  color: var(--ivory-dim);
+  color: #b9b6c2;
   transition: color 0.2s ease;
+  padding-bottom: 4px;
 }
 
 .nav-links a:hover {
   color: var(--gold-soft);
 }
 
-.nav-cta {
-  background: var(--violet);
-  color: #fff;
-  padding: 10px 20px;
-  border-radius: 8px;
-  font-size: 13.5px;
+.nav-links a.active {
+  color: var(--gold-soft);
+  border-bottom: 2px solid var(--gold-soft);
+}
+
+.nav-right {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex-shrink: 0;
+}
+
+.lang-toggle {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  background: #17151c;
+  border: 1px solid rgba(212, 175, 55, 0.2);
+  border-radius: 999px;
+  padding: 4px;
+  font-size: 12.5px;
   font-weight: 600;
+}
+
+.lang-toggle span {
+  padding: 6px 12px;
+  border-radius: 999px;
+  color: #cfc9d8;
+  cursor: pointer;
+}
+
+.lang-toggle span.active {
+  background: var(--gold-soft);
+  color: #1a1420;
+}
+
+.nav-cta {
+  background: linear-gradient(90deg, #ef6a3f, #f0455c);
+  color: #fff;
+  padding: 12px 22px;
+  border-radius: 999px;
+  font-size: 13.5px;
+  font-weight: 700;
   text-decoration: none;
-  border: 1px solid var(--violet-soft);
-  transition: transform 0.2s ease, background 0.2s ease;
+  white-space: nowrap;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
 .nav-cta:hover {
-  background: var(--violet-deep);
   transform: translateY(-1px);
+  box-shadow: 0 10px 24px rgba(240, 69, 92, 0.35);
+}
+
+@media (max-width: 980px) {
+  .nav-links { display: none; }
+  .lang-toggle { display: none; }
 }
 
 /* ---------- hero ---------- */
@@ -616,68 +667,153 @@ details.tc .tc-body {
   gap: 10px;
 }
 
-/* ---------- contact ---------- */
-.contact-row {
-  display: flex;
-  gap: 22px;
-  flex-wrap: wrap;
-  justify-content: center;
-}
-
-.contact-pill {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  padding: 14px 22px;
-  border: 1px solid var(--violet-line);
-  border-radius: 12px;
-  text-decoration: none;
-  font-size: 14px;
-  color: var(--ivory);
-  background: rgba(44, 26, 68, 0.3);
-  transition: border-color 0.2s ease;
-}
-
-.contact-pill:hover {
-  border-color: var(--gold);
-}
-
-/* ---------- footer ---------- */
+/* ---------- footer (matches thedivinetarotonline.com footer) ---------- */
 footer {
   position: relative;
   z-index: 1;
-  border-top: 1px solid var(--line);
-  padding: 40px 0 60px;
-  text-align: center;
-}
-
-footer p {
-  font-size: 13px;
-  color: var(--ivory-dim);
-  margin-bottom: 6px;
+  background: #0a0a0c;
+  border-top: 1px solid rgba(212, 175, 55, 0.12);
+  padding: 56px 0 0;
 }
 
 footer a {
-  color: var(--gold-soft);
+  color: inherit;
   text-decoration: none;
 }
 
+.footer-grid {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr 1fr 1.2fr;
+  gap: 40px;
+  max-width: 1400px;
+  padding-bottom: 40px;
+}
+
+.footer-brand .brand { margin-bottom: 14px; }
+
+.footer-tagline {
+  font-size: 13.5px;
+  color: var(--ivory-dim);
+}
+
+.footer-heading {
+  font-family: "Cinzel", serif;
+  font-size: 11.5px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--gold-soft);
+  margin-bottom: 18px;
+}
+
+.footer-links {
+  list-style: none;
+  display: grid;
+  gap: 12px;
+  font-size: 14px;
+  color: #cfc9d8;
+}
+
+.footer-links a { transition: color 0.2s ease; }
+.footer-links a:hover { color: var(--gold-soft); }
+
 .social-row {
   display: flex;
-  gap: 16px;
-  justify-content: center;
-  margin: 16px 0;
+  gap: 10px;
+  margin-bottom: 18px;
 }
 
 .social-row a {
-  width: 36px;
-  height: 36px;
-  border-radius: 50%;
-  border: 1px solid var(--violet-line);
+  width: 34px;
+  height: 34px;
+  border-radius: 8px;
+  border: 1px solid rgba(212, 175, 55, 0.2);
+  background: #151318;
   display: flex;
   align-items: center;
   justify-content: center;
+  font-size: 13px;
+  color: #cfc9d8;
+  transition: border-color 0.2s ease, color 0.2s ease;
+}
+
+.social-row a:hover {
+  border-color: var(--gold);
+  color: var(--gold-soft);
+}
+
+.footer-privacy-link {
+  font-size: 13px;
+  color: #9a95a8;
+}
+
+.footer-privacy-link:hover { color: var(--gold-soft); }
+
+.newsletter-form {
+  display: grid;
+  gap: 10px;
+}
+
+.newsletter-form input {
+  width: 100%;
+  padding: 12px 14px;
+  border-radius: 8px;
+  border: 1px solid rgba(212, 175, 55, 0.2);
+  background: #151318;
+  color: var(--ivory);
+  font-size: 13.5px;
+  font-family: inherit;
+}
+
+.newsletter-form input:focus {
+  outline: none;
+  border-color: var(--gold);
+}
+
+.newsletter-form .btn {
+  padding: 12px 20px;
   font-size: 14px;
+}
+
+.trust-row {
+  display: flex;
+  gap: 32px;
+  justify-content: center;
+  flex-wrap: wrap;
+  font-size: 12.5px;
+  color: #9a95a8;
+  border-top: 1px solid rgba(212, 175, 55, 0.1);
+  padding: 22px 0;
+}
+
+.footer-bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 20px 24px 28px;
+  font-size: 12.5px;
+  color: #7d7889;
+  border-top: 1px solid rgba(212, 175, 55, 0.08);
+}
+
+.footer-bottom a {
+  color: var(--gold-soft);
+}
+
+.footer-bottom-right a {
+  color: #9a95a8;
+}
+
+@media (max-width: 900px) {
+  .footer-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (max-width: 560px) {
+  .footer-grid { grid-template-columns: 1fr; }
+  .footer-bottom { flex-direction: column; gap: 8px; text-align: center; }
 }
 
 @media (max-width: 640px) {

@@ -109,23 +109,37 @@ export default function Home() {
 
       <div className="stars" ref={starsRef}></div>
 
-      {/* NAV */}
+      {/* NAV — exact structure/order per thedivinetarotonline.com header */}
       <nav className="navbar">
-        <div className="container">
-          <a href="#" className="brand">
+        <div className="container navbar-inner">
+          <a href="https://thedivinetarotonline.com/" className="brand">
+            {/* Placeholder mark — swap for the real logo file (client's deity artwork) */}
             <span className="mark"></span>
             <span>
               The Divine Tarot
               <small>Premium Tarot Guidance</small>
             </span>
           </a>
+
           <div className="nav-links">
-            <a href="#how-to-book">How to Book</a>
-            <a href="#reading">Reading</a>
-            <a href="#notes">Notes</a>
-            <a href="#contact">Contact</a>
+            <a href="https://thedivinetarotonline.com/" className="active">Home</a>
+            <a href="https://thedivinetarotonline.com/about">About</a>
+            <a href="https://thedivinetarotonline.com/reading">Reading</a>
+            <a href="https://learn.thedivinetarotonline.com/">Course</a>
+            <a href="https://thedivinetarotonline.com/kundli-milan">Kundli Milan</a>
+            <a href="https://thedivinetarotonline.co.in/">Personal Reading</a>
           </div>
-          <a href="#book" className="nav-cta">Book Now</a>
+
+          <div className="nav-right">
+            <div className="lang-toggle">
+              <span className="active">EN</span>
+              <span>हिंदी</span>
+              <span>Hinglish</span>
+            </div>
+            <a href="https://thedivinetarotonline.com/reading" className="nav-cta">
+              Ask your question here
+            </a>
+          </div>
         </div>
       </nav>
 
@@ -430,38 +444,66 @@ export default function Home() {
         <span className="ln"></span>
       </div>
 
-      {/* CONTACT */}
-      <section id="contact">
-        <div className="container">
-          <div className="kicker">Contact Us</div>
-          <h2>Have a Question First?</h2>
-          <div className="contact-row">
-            <a
-              className="contact-pill"
-              href="mailto:thedivinetarothindi@gmail.com?subject=Query%20for%20Payment%20Page"
+      {/* FOOTER — replicates thedivinetarotonline.com footer layout */}
+      <footer>
+        <div className="container footer-grid">
+          <div className="footer-brand">
+            <a href="https://thedivinetarotonline.com/" className="brand">
+              <span className="mark"></span>
+              <span>
+                The Divine Tarot
+                <small>Premium Tarot Guidance</small>
+              </span>
+            </a>
+            <p className="footer-tagline">Clarity for your path. Guidance for your soul.</p>
+          </div>
+
+          <div className="footer-col">
+            <div className="footer-heading">Quick Links</div>
+            <ul className="footer-links">
+              <li><a href="https://thedivinetarotonline.com/about">About</a></li>
+              <li><a href="https://thedivinetarotonline.com/reading">Readings</a></li>
+              <li><a href="https://learn.thedivinetarotonline.com/">Premium</a></li>
+            </ul>
+          </div>
+
+          <div className="footer-col">
+            <div className="footer-heading">Connect With Us</div>
+            <div className="social-row">
+              <a href="https://instagram.com/thedivineetarot" target="_blank" rel="noreferrer" aria-label="Instagram">◎</a>
+              <a href="https://facebook.com/profile.php?id=61578567343068" target="_blank" rel="noreferrer" aria-label="Facebook">f</a>
+              <a href="https://youtube.com/@TheDivineTarot" target="_blank" rel="noreferrer" aria-label="YouTube">▶</a>
+              <a href="https://youtube.com/@TheDivineTarot" target="_blank" rel="noreferrer" aria-label="YouTube">▶</a>
+            </div>
+            <a href="/privacy" className="footer-privacy-link">Privacy</a>
+          </div>
+
+          <div className="footer-col">
+            <div className="footer-heading">Get Daily Divine Insights</div>
+            <form
+              className="newsletter-form"
+              onSubmit={(e) => e.preventDefault()}
             >
-              ✉ thedivinetarothindi@gmail.com
-            </a>
-            <a className="contact-pill" href="tel:+918828116545">
-              ✆ +91 88281 16545
-            </a>
+              <input type="email" placeholder="Your email" aria-label="Email" />
+              <input type="tel" placeholder="WhatsApp number (optional)" aria-label="WhatsApp number" />
+              <button type="submit" className="btn gold" style={{ width: "100%", justifyContent: "center" }}>
+                Subscribe
+              </button>
+            </form>
           </div>
         </div>
-      </section>
 
-      {/* FOOTER */}
-      <footer>
-        <div className="container">
-          <p style={{ fontFamily: "'Cinzel', serif", color: "var(--ivory)", fontSize: 15 }}>
-            The Divine Tarot
-          </p>
-          <p>Clarity for your path. Guidance for your soul.</p>
-          <div className="social-row">
-            <a href="https://instagram.com/thedivineetarot" target="_blank" rel="noreferrer">IG</a>
-            <a href="https://youtube.com/@TheDivineTarot" target="_blank" rel="noreferrer">YT</a>
-            <a href="https://facebook.com/profile.php?id=61578567343068" target="_blank" rel="noreferrer">FB</a>
-          </div>
-          <p style={{ marginTop: 10 }}>© {new Date().getFullYear()} The Divine Tarot. All rights reserved.</p>
+        <div className="trust-row">
+          <span>🔒 Secure &amp; Private Readings</span>
+          <span>♡ Trusted by 7L+ Seekers</span>
+          <span>✦ Authentic Spiritual Guidance</span>
+        </div>
+
+        <div className="footer-bottom">
+          <span>Designed by <a href="#" target="_blank" rel="noreferrer">Sitelytc</a></span>
+          <span className="footer-bottom-right">
+            <a href="/privacy">Privacy</a> · {new Date().getFullYear()}
+          </span>
         </div>
       </footer>
     </>
