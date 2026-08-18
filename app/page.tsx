@@ -1,30 +1,16 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useState } from "react";
 import Script from "next/script";
 
 type Status = "idle" | "loading" | "verifying" | "success" | "error";
 
 export default function Home() {
-  const starsRef = useRef<HTMLDivElement>(null);
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
   const [status, setStatus] = useState<Status>("idle");
   const [errorMsg, setErrorMsg] = useState("");
-
-  useEffect(() => {
-    const wrap = starsRef.current;
-    if (!wrap) return;
-    const N = 70;
-    for (let i = 0; i < N; i++) {
-      const s = document.createElement("span");
-      s.style.left = Math.random() * 100 + "vw";
-      s.style.top = Math.random() * 100 + "vh";
-      s.style.animationDelay = Math.random() * 4.5 + "s";
-      wrap.appendChild(s);
-    }
-  }, []);
 
   async function handlePay() {
     setErrorMsg("");
@@ -107,8 +93,6 @@ export default function Home() {
     <>
       <Script src="https://checkout.razorpay.com/v1/checkout.js" strategy="beforeInteractive" />
 
-      <div className="stars" ref={starsRef}></div>
-
       {/* NAV — exact structure/order per thedivinetarotonline.com header */}
       <nav className="navbar">
         <div className="container navbar-inner">
@@ -156,7 +140,7 @@ export default function Home() {
           Ability, Face Analysis, Candle Wax Reading, Kundli Analysis, Kundli Milan &amp;
           a Manifestation Coach.
         </p>
-        <a href="#book" className="btn gold">Book Your Personal Reading ✨</a>
+        <a href="#book" className="btn gold">Book Your Personal Reading</a>
       </section>
 
       {/* SKILLS STRIP */}
@@ -170,12 +154,6 @@ export default function Home() {
             <span key={skill}>{skill}</span>
           ))}
         </div>
-      </div>
-
-      <div className="phase-divider">
-        <span className="ln"></span>
-        <span className="dots"><i></i><i></i><i></i><i></i><i></i></span>
-        <span className="ln"></span>
       </div>
 
       {/* HOW TO BOOK */}
@@ -236,12 +214,6 @@ export default function Home() {
         </div>
       </section>
 
-      <div className="phase-divider">
-        <span className="ln"></span>
-        <span className="dots"><i></i><i></i><i></i><i></i><i></i></span>
-        <span className="ln"></span>
-      </div>
-
       {/* READING / PRICING */}
       <section id="reading">
         <div className="container">
@@ -275,12 +247,6 @@ export default function Home() {
           </div>
         </div>
       </section>
-
-      <div className="phase-divider">
-        <span className="ln"></span>
-        <span className="dots"><i></i><i></i><i></i><i></i><i></i></span>
-        <span className="ln"></span>
-      </div>
 
       {/* BOOKING / PAYMENT */}
       <section id="book">
@@ -362,12 +328,6 @@ export default function Home() {
         </div>
       </section>
 
-      <div className="phase-divider">
-        <span className="ln"></span>
-        <span className="dots"><i></i><i></i><i></i><i></i><i></i></span>
-        <span className="ln"></span>
-      </div>
-
       {/* NOTES */}
       <section id="notes">
         <div className="container">
@@ -439,12 +399,6 @@ export default function Home() {
           </details>
         </div>
       </section>
-
-      <div className="phase-divider">
-        <span className="ln"></span>
-        <span className="dots"><i></i><i></i><i></i><i></i><i></i></span>
-        <span className="ln"></span>
-      </div>
 
       {/* FOOTER — replicates thedivinetarotonline.com footer layout */}
       <footer>
