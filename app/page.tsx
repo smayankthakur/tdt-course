@@ -316,7 +316,10 @@ export default function Home() {
                 inbox (and spam folder) and fill the form carefully.
               </p>
               <a
-                href={process.env.NEXT_PUBLIC_GOOGLE_FORM_URL || "https://forms.gle/pxDsLcTv16qWMhUA7"}
+                href={
+                  process.env.NEXT_PUBLIC_GOOGLE_FORM_URL ||
+                  "https://docs.google.com/forms/d/e/1FAIpQLScOt9_M6dXtizMxsHsP9tyQ3hLUUXx2J9NrV_Naq7KyloKjAA/viewform"
+                }
                 target="_blank"
                 rel="noopener noreferrer"
                 className="btn gold"
