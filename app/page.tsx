@@ -1,98 +1,18 @@
 "use client";
 
 import { useState } from "react";
-import Script from "next/script";
 
-type Status = "idle" | "loading" | "verifying" | "success" | "error";
+const PAY_URL =
+  process.env.NEXT_PUBLIC_RAZORPAY_PAY_URL || "https://rzp.io/rzp/8A6T0cz";
+const FORM_URL =
+  process.env.NEXT_PUBLIC_GOOGLE_FORM_URL ||
+  "https://docs.google.com/forms/d/e/1FAIpQLScOt9_M6dXtizMxsHsP9tyQ3hLUUXx2J9NrV_Naq7KyloKjAA/viewform";
 
 export default function Home() {
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [phone, setPhone] = useState("");
-  const [status, setStatus] = useState<Status>("idle");
-  const [errorMsg, setErrorMsg] = useState("");
-
-  async function handlePay() {
-    setErrorMsg("");
-
-    if (!name.trim() || !email.trim()) {
-      setErrorMsg("Please enter your name and email before proceeding.");
-      return;
-    }
-
-    setStatus("loading");
-
-    try {
-      const orderRes = await fetch("/api/razorpay/order", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ name, email }),
-      });
-      const order = await orderRes.json();
-
-      if (!orderRes.ok) {
-        throw new Error(order.error || "Could not start payment");
-      }
-
-      const options = {
-        key: order.keyId,
-        amount: order.amount,
-        currency: order.currency,
-        name: "The Divine Tarot",
-        description: "Call Reading (40 Mins) — Bharti Singh",
-        order_id: order.orderId,
-        prefill: { name, email, contact: phone },
-        theme: { color: "#6d28d9" },
-        handler: async function (response: any) {
-          setStatus("verifying");
-          try {
-            const verifyRes = await fetch("/api/razorpay/verify", {
-              method: "POST",
-              headers: { "Content-Type": "application/json" },
-              body: JSON.stringify({
-                razorpay_order_id: response.razorpay_order_id,
-                razorpay_payment_id: response.razorpay_payment_id,
-                razorpay_signature: response.razorpay_signature,
-                name,
-                email,
-              }),
-            });
-            const verifyData = await verifyRes.json();
-
-            if (!verifyRes.ok || !verifyData.verified) {
-              throw new Error(verifyData.error || "Payment could not be verified");
-            }
-
-            setStatus("success");
-          } catch (err: any) {
-            setErrorMsg(err.message || "Something went wrong while verifying your payment.");
-            setStatus("error");
-          }
-        },
-        modal: {
-          ondismiss: function () {
-            if (status !== "success") setStatus("idle");
-          },
-        },
-      };
-
-      // @ts-ignore - Razorpay is loaded globally via the checkout.js script
-      const rzp = new window.Razorpay(options);
-      rzp.on("payment.failed", function () {
-        setErrorMsg("Payment failed or was cancelled. Please try again.");
-        setStatus("error");
-      });
-      rzp.open();
-    } catch (err: any) {
-      setErrorMsg(err.message || "Could not start payment. Please try again.");
-      setStatus("error");
-    }
-  }
+  const [confirmed, setConfirmed] = useState(false);
 
   return (
     <>
-      <Script src="https://checkout.razorpay.com/v1/checkout.js" strategy="beforeInteractive" />
-
       {/* NAV — exact structure/order per thedivinetarotonline.com header */}
       <nav className="navbar">
         <div className="container navbar-inner">
@@ -136,195 +56,61 @@ export default function Home() {
         <p className="namaste">Namaste, main hu Bharti Singh</p>
         <h1>India&rsquo;s No.1 Psychic Tarot Reader</h1>
         <p className="sub">
-          Expert in Tarot, Astro, Numero, Hoodoo, Runes, Dice, Coffee Cup, Psychic
-          Ability, Face Analysis, Candle Wax Reading, Kundli Analysis, Kundli Milan &amp;
-          a Manifestation Coach.
+          Tarot · Astro · Numero · Kundli Analysis · Face Reading · Psychic Ability
         </p>
         <a href="#book" className="btn gold">Book Your Personal Reading</a>
       </section>
 
-      {/* SKILLS STRIP */}
-      <div className="skills">
-        <div className="container skills-track">
-          {[
-            "Tarot", "Astrology", "Numerology", "Hoodoo", "Runes", "Dice Reading",
-            "Coffee Cup Reading", "Psychic Ability", "Face Analysis", "Candle Wax Reading",
-            "Kundli Analysis", "Kundli Milan", "Manifestation Coaching",
-          ].map((skill) => (
-            <span key={skill}>{skill}</span>
-          ))}
-        </div>
-      </div>
-
-      {/* HOW TO BOOK */}
-      <section id="how-to-book">
-        <div className="container">
-          <div className="kicker">How to Book</div>
-          <h2>Personal Reading Kaise Book Karein?</h2>
-          <p className="section-sub">Simple 4-step process — start to finish.</p>
-
-          <div className="steps">
-            <div className="step">
-              <div className="num">01</div>
-              <div>
-                <h3>Pehle Pay Karein</h3>
-                <p>
-                  Payment complete karne ke turant baad aapko order confirmation ki
-                  receipt aapke mail id par receive hogi.
-                </p>
-              </div>
-            </div>
-            <div className="step">
-              <div className="num">02</div>
-              <div>
-                <h3>Form Link Receive Karein</h3>
-                <p>
-                  Uske baad ek Appointment Form ki link aapko email par bhej di jayegi.
-                  Isके liye aapko humein remind karne ki zaroorat nahi hai.
-                </p>
-              </div>
-            </div>
-            <div className="step">
-              <div className="num">03</div>
-              <div>
-                <h3>Form Dhyan Se Bharein</h3>
-                <p>
-                  Is form mein aapse kuch details puchi jayengi (naam, birthdate, etc).
-                  Form ko dhyan se bharke submit karein.
-                </p>
-              </div>
-            </div>
-            <div className="step">
-              <div className="num">04</div>
-              <div>
-                <h3>Appointment Details Paayein</h3>
-                <p>
-                  Form submit karne ke 2 dino ke andar aapke appointment ki Date &amp; Time
-                  aapki mail id par receive hongi. Bas us din available rahein — call hum
-                  saamne se karte hain.
-                </p>
-              </div>
-            </div>
-          </div>
-
-          <p className="section-sub" style={{ marginTop: 36, marginBottom: 0 }}>
-            Appointment within 7–10 working days · Mon–Fri · 12PM–8PM (IST) · Slot availability
-            per form response.
-          </p>
-        </div>
-      </section>
-
-      {/* READING / PRICING */}
-      <section id="reading">
-        <div className="container">
-          <div className="kicker">The Service</div>
-          <h2>Voice Call Reading</h2>
-          <p className="section-sub">
-            One-on-one guidance, straight from the universe — no sugar-coating.
-          </p>
-
-          <div className="price-card">
-            <span className="badge">Most Booked</span>
-            <h3>Call Reading</h3>
-            <div className="amount">
-              ₹8,500<small>40 Minutes · Voice Call</small>
-            </div>
-
-            <div className="includes">
-              Includes <strong>Tarot, Astrology, Numerology, Face Reading, Kundli
-              Analysis &amp; Psychic</strong> guidance.
-            </div>
-
-            <ul className="feature-list">
-              <li>Ask unlimited questions</li>
-              <li>This session covers up to 3 people, including you</li>
-              <li>You may only ask about the person(s) whose details you submit in the form</li>
-              <li>Days: Mon–Fri · Time: 12PM–8PM (IST)</li>
-              <li>Choose 3 time-slot options in the form for smoother scheduling</li>
-              <li>No Refund Policy — please pay carefully</li>
-              <li>Limited slots available per day</li>
-            </ul>
-          </div>
-        </div>
-      </section>
-
-      {/* BOOKING / PAYMENT */}
+      {/* BOOK — pricing + payment + form, all in one fast section */}
       <section id="book">
         <div className="container">
           <div className="kicker">Book Now</div>
-          <h2>Complete Your Booking</h2>
-          <p className="section-sub">
-            Enter your details, then pay securely via Razorpay. Your appointment form
-            will be emailed to you right after payment is verified.
-          </p>
+          <h2>Voice Call Reading</h2>
 
-          {status !== "success" ? (
-            <div className="booking-panel">
-              <div className="field">
-                <label htmlFor="name">Full Name</label>
-                <input
-                  id="name"
-                  type="text"
-                  value={name}
-                  onChange={(e) => setName(e.target.value)}
-                  placeholder="Your name"
-                />
+          {!confirmed ? (
+            <div className="price-card">
+              <span className="badge">40 Minutes · Voice Call</span>
+              <h3>Call Reading</h3>
+              <div className="amount">
+                ₹8,500<small>Tarot, Astro, Numero, Face Reading, Kundli Analysis &amp; Psychic</small>
               </div>
-              <div className="field">
-                <label htmlFor="email">Email Address</label>
-                <input
-                  id="email"
-                  type="email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  placeholder="you@example.com"
-                />
-              </div>
-              <div className="field">
-                <label htmlFor="phone">Phone Number (optional)</label>
-                <input
-                  id="phone"
-                  type="tel"
-                  value={phone}
-                  onChange={(e) => setPhone(e.target.value)}
-                  placeholder="+91"
-                />
-              </div>
+
+              <ul className="feature-list">
+                <li>Ask unlimited questions, up to 2 people including you</li>
+                <li>Appointment within 7–10 days · Mon–Fri · 12PM–8PM (IST)</li>
+                <li>No Refund Policy — please pay carefully</li>
+              </ul>
+
+              <a
+                href={PAY_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="btn gold"
+                style={{ width: "100%", justifyContent: "center", marginBottom: 14 }}
+              >
+                Pay ₹8,500 on Razorpay
+              </a>
 
               <button
-                className="btn gold"
+                className="btn ghost"
                 style={{ width: "100%", justifyContent: "center" }}
-                onClick={handlePay}
-                disabled={status === "loading" || status === "verifying"}
+                onClick={() => setConfirmed(true)}
               >
-                {status === "loading" && "Opening Payment…"}
-                {status === "verifying" && "Verifying Payment…"}
-                {(status === "idle" || status === "error") && "Pay ₹8,500 & Book Reading"}
+                I&rsquo;ve Completed My Payment
               </button>
-
-              {errorMsg && <div className="form-msg error">{errorMsg}</div>}
             </div>
           ) : (
             <div className="form-reveal">
               <div className="check">✓</div>
               <h3 style={{ fontFamily: "'Cormorant Garamond', serif", fontStyle: "italic", fontSize: 20, marginBottom: 10 }}>
-                Payment Confirmed — Thank you, {name}!
+                Thank you — one last step
               </h3>
               <p style={{ color: "var(--ivory-dim)", marginBottom: 24, fontSize: 14.5 }}>
-                A confirmation receipt and your appointment form have been sent to{" "}
-                <strong style={{ color: "var(--ivory)" }}>{email}</strong>. Please check your
-                inbox (and spam folder) and fill the form carefully.
+                Fill the Personal Reading form below with your details so your appointment
+                can be scheduled.
               </p>
-              <a
-                href={
-                  process.env.NEXT_PUBLIC_GOOGLE_FORM_URL ||
-                  "https://docs.google.com/forms/d/e/1FAIpQLScOt9_M6dXtizMxsHsP9tyQ3hLUUXx2J9NrV_Naq7KyloKjAA/viewform"
-                }
-                target="_blank"
-                rel="noopener noreferrer"
-                className="btn gold"
-              >
-                Open Appointment Form →
+              <a href={FORM_URL} target="_blank" rel="noopener noreferrer" className="btn gold">
+                Fill Personal Reading Form →
               </a>
             </div>
           )}
@@ -337,45 +123,15 @@ export default function Home() {
           <div className="kicker">Please Read Before Booking</div>
           <h2>Important Notes</h2>
 
-          <div className="notes" style={{ marginBottom: 36 }}>
+          <div className="notes" style={{ marginBottom: 32 }}>
             <p>
-              We are certified and experienced in Astrology, Numerology, Psychic Tarot
-              Card Reading, Vedic Kundli Analysis, Hoodoo, Tantra Vidya, Candle Wax
-              Reading &amp; Coffee Cup Reading.
+              We do not offer Tantra, Vashikaran, or free readings under any circumstance.
+              We don&rsquo;t cover legal matters, share market, lottery, child&rsquo;s gender,
+              or sexual questions.
             </p>
             <p>
-              <strong>No sugar-coating:</strong> our purpose is to deliver the universe&rsquo;s
-              message with complete honesty and sincerity.
-            </p>
-            <p>
-              <strong>We do not offer</strong> Tantra or Vashikaran services under any
-              circumstance — please do not request these.
-            </p>
-            <p>
-              We do not provide readings on legal matters, share market, lottery, a
-              child&rsquo;s gender, or sexual questions.
-            </p>
-            <p>
-              Readings are guidance from the universe — please treat them as guidance,
-              not absolute fact. When reading a partner&rsquo;s feelings, remember that
-              energies change, as every person has free will.
-            </p>
-            <p><strong>We do not offer free readings under any circumstance.</strong></p>
-            <p>
-              <strong>No Refund Policy</strong> — payments are non-refundable. Please read
-              everything carefully before paying.
-            </p>
-            <p>
-              Your name, photos, and all shared details are kept strictly confidential.
-              Your safety is our priority.
-            </p>
-            <p>
-              This is a judgment-free space — whoever you are and whatever your question,
-              you are heard with respect and compassion. Ask fearlessly.
-            </p>
-            <p>
-              <strong>The Divine Tarot</strong> is a legally registered brand. Unauthorized
-              copying of this name, content, or material will lead to legal action.
+              <strong>No Refund Policy</strong> — payments are non-refundable. Your details
+              are kept strictly confidential, and this is a judgment-free space.
             </p>
           </div>
 
@@ -439,10 +195,7 @@ export default function Home() {
 
           <div className="footer-col">
             <div className="footer-heading">Get Daily Divine Insights</div>
-            <form
-              className="newsletter-form"
-              onSubmit={(e) => e.preventDefault()}
-            >
+            <form className="newsletter-form" onSubmit={(e) => e.preventDefault()}>
               <input type="email" placeholder="Your email" aria-label="Email" />
               <input type="tel" placeholder="WhatsApp number (optional)" aria-label="WhatsApp number" />
               <button type="submit" className="btn gold" style={{ width: "100%", justifyContent: "center" }}>
