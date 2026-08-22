@@ -1,85 +1,36 @@
-# Mystic Arts School — Course Platform
+This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
-A Next.js 14+ (App Router, TypeScript) course enrollment site: tarot, runes,
-dice, candle-wax reading courses, and an offline healing membership. Dark
-purple/gold "cosmic" identity, fully data-driven.
+## Getting Started
 
-## Local setup
+First, run the development server:
 
 ```bash
-npm install
-cp .env.local.example .env.local   # fill in both Razorpay values
 npm run dev
+# or
+yarn dev
+# or
+pnpm dev
+# or
+bun dev
 ```
 
-Visit http://localhost:3000.
+Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-## Adding or editing a course
+You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
 
-Everything about a course — copy, schedule, price, amount, learn/need
-lists, form link, accent color, image, slug — lives in one place:
+This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
 
-```
-lib/courses.ts
-```
+## Learn More
 
-Add or edit an object in the `courses` array and the homepage grid, the
-`/courses/[slug]` page, and checkout all update automatically.
+To learn more about Next.js, take a look at the following resources:
 
-## Payment → registration flow
+- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
+- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
 
-There is **no visible payment link or Google Form link anywhere on the
-site.** Both only exist in server-side data (`lib/courses.ts`) and are
-only ever used behind the scenes. The registration form is handed to the
-browser exactly once: after a real, cryptographically verified payment.
+You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
 
-**How it works:**
+## Deploy on Vercel
 
-1. Visitor clicks "Pay & Enrol" → the browser calls `POST /api/create-order`
-   with just the course key. The server (`lib/razorpay.ts`, using
-   `RAZORPAY_KEY_ID` + `RAZORPAY_KEY_SECRET`) creates a Razorpay Order for
-   that course's exact amount — the client never sends or controls the
-   price.
-2. Razorpay's Checkout.js opens an embedded payment modal (no redirect to
-   an external page, no new tab).
-3. On completion, Checkout.js hands the browser a payment ID + signature.
-   The browser sends those to `POST /api/verify-payment`, which:
-   - recomputes the HMAC signature server-side and rejects any mismatch,
-   - re-fetches the order from Razorpay to confirm it's genuinely marked
-     `paid` and belongs to the course being claimed (stops a signature for
-     one course being replayed against another),
-   - only then returns that course's Google Form URL in the response.
-4. The browser opens the form automatically in a new tab. If the popup is
-   blocked, a "Didn't open? Click here" button appears using the same
-   verified URL — never a hardcoded one.
-5. If the visitor closes the checkout modal without paying, or verification
-   fails for any reason, they land back on "Pay & Enrol" with no form
-   access — the only way forward is to actually pay.
+The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
-## Required Vercel environment variables
-
-Set these in **Vercel → your project → Settings → Environment Variables**
-(add to both Production and Preview), from **Razorpay Dashboard → Settings
-→ API Keys**:
-
-| Variable | Value | Exposed to browser? |
-|---|---|---|
-| `RAZORPAY_KEY_ID` | Your Razorpay Key ID (e.g. `rzp_live_...`) | Yes — needed by Checkout.js, not secret |
-| `RAZORPAY_KEY_SECRET` | Your Razorpay Key Secret | **No** — server-only, used to create/verify orders |
-
-Without these, `/api/create-order` will fail closed with a clear error —
-checkout simply won't start, rather than silently accepting unpaid
-"successful" registrations.
-
-## Images
-
-`public/images/*.svg` are placeholder illustrations (accent-colored,
-symbolic motifs) generated for each course. Swap them for real photography —
-same filenames, or update the `image` field per course in `lib/courses.ts`.
-
-## Deploying
-
-Push to a git repo, import into Vercel, set the two environment variables
-above, then deploy. No Razorpay Payment Links or dashboard redirect
-configuration are needed — orders are created and verified entirely
-through this app's own API routes.
+Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.

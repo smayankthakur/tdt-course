@@ -1,121 +1,119 @@
-import type { Metadata } from "next";
-import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { courses, getCourseBySlug } from "@/lib/courses";
-import CheckoutButton from "@/components/CheckoutButton";
-
-interface PageProps {
-  params: Promise<{ slug: string }>;
-}
+import { courses, getCourse } from "@/lib/courses";
+import Glyph from "@/components/Glyph";
 
 export function generateStaticParams() {
   return courses.map((c) => ({ slug: c.slug }));
 }
 
-export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
+export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
-  const course = getCourseBySlug(slug);
+  const course = getCourse(slug);
   if (!course) return {};
   return {
-    title: course.title,
-    description: course.blurb,
-    openGraph: {
-      title: course.title,
-      description: course.blurb,
-      images: [course.image],
-    },
+    title: `${course.title} · The Divine Tarot`,
+    description: course.summary,
   };
 }
 
-export default async function CourseDetailPage({ params }: PageProps) {
+export default async function CoursePage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
-  const course = getCourseBySlug(slug);
+  const course = getCourse(slug);
   if (!course) notFound();
 
   return (
-    <main className="mx-auto max-w-3xl px-6 py-16">
-      <Link
-        href="/#courses"
-        className="text-xs text-[var(--muted)] underline underline-offset-4 hover:text-[var(--gold-soft)]"
-      >
-        ← Back to all courses
-      </Link>
-
-      <div className="relative mt-6 h-56 w-full overflow-hidden rounded-2xl sm:h-72">
-        <Image src={course.image} alt={course.title} fill className="object-cover" priority />
-      </div>
-
-      <div className="mt-6 flex flex-wrap items-center gap-3">
-        <span
-          className="rounded-full px-3 py-1 font-[family-name:var(--font-display)] text-[10px] uppercase tracking-wider text-white"
-          style={{ backgroundColor: course.accent }}
+    <section className="px-5 py-14 sm:px-8 sm:py-20">
+      <div className="mx-auto max-w-3xl">
+        <Link
+          href="/#courses"
+          className="inline-flex items-center gap-1.5 text-sm text-[color:var(--muted)] transition hover:text-[color:var(--ivory)]"
         >
-          {course.badge}
-        </span>
-        <span className="text-lg font-semibold text-[var(--gold)]">{course.price}</span>
-      </div>
+          ← Back to all courses
+        </Link>
 
-      <h1 className="mt-3 font-[family-name:var(--font-serif)] text-3xl text-[var(--text)] sm:text-4xl">
-        {course.title}
-      </h1>
-      <p className="mt-3 text-[var(--muted)]">{course.blurb}</p>
-
-      <p
-        className="rich-info mt-4 rounded-lg border border-[var(--border)] bg-[var(--card)] p-4 text-sm text-[var(--muted)]"
-        dangerouslySetInnerHTML={{ __html: course.info }}
-      />
-
-      <ul className="mt-4 grid grid-cols-1 gap-2 text-sm text-[var(--muted)] sm:grid-cols-2">
-        {course.schedule.map((item, i) => (
-          <li key={i} className="rounded-lg border border-[var(--border)] bg-[var(--bg-soft)] px-3 py-2">
-            {item}
-          </li>
-        ))}
-      </ul>
-
-      <div className="mt-8 grid grid-cols-1 gap-8 sm:grid-cols-2">
-        <div>
-          <h2 className="font-[family-name:var(--font-display)] text-xs uppercase tracking-wider text-[var(--gold-soft)]">
-            What you&apos;ll learn
-          </h2>
-          <ul className="mt-3 space-y-2 text-sm text-[var(--text)]">
-            {course.learn.map((item, i) => (
-              <li key={i} className="flex gap-2">
-                <span className="text-[var(--gold-soft)]">✦</span>
-                <span>{item}</span>
-              </li>
-            ))}
-          </ul>
+        <div className="relative mt-8 flex h-56 items-center justify-center overflow-hidden rounded-3xl border border-[color:var(--hairline)] bg-[color:var(--bg-surface-2)]">
+          <div
+            className="absolute inset-0 opacity-70"
+            style={{
+              background:
+                "radial-gradient(circle at 25% 20%, rgba(167,139,250,0.35), transparent 55%), radial-gradient(circle at 80% 85%, rgba(212,175,106,0.28), transparent 50%)",
+            }}
+          />
+          <Glyph name={course.glyph} className="relative h-28 w-28 text-[color:var(--gold-light,#ecd9a8)]" />
         </div>
-        <div>
-          <h2 className="font-[family-name:var(--font-display)] text-xs uppercase tracking-wider text-[var(--gold-soft)]">
-            What you&apos;ll need
-          </h2>
-          <ul className="mt-3 space-y-2 text-sm text-[var(--text)]">
-            {course.need.map((item, i) => (
-              <li key={i} className="flex gap-2">
-                <span className="text-[var(--purple-light)]">›</span>
-                <span>{item}</span>
-              </li>
-            ))}
-          </ul>
+
+        <div className="mt-6 flex flex-wrap items-center gap-3">
+          <span className="rounded-full bg-white/5 px-3 py-1 text-[11px] font-medium uppercase tracking-wide text-[color:var(--muted)]">
+            {course.tag}
+          </span>
+          <span className="rounded-full bg-[color:var(--gold)] px-3 py-1 text-[11px] font-bold text-[color:var(--bg-void)]">
+            {course.price}
+          </span>
+        </div>
+
+        <h1 className="mt-4 font-serif text-4xl text-[color:var(--ivory)] sm:text-5xl">{course.title}</h1>
+        <p className="mt-4 text-base leading-relaxed text-[color:var(--muted)] sm:text-lg">{course.summary}</p>
+
+        <p className="mt-5 rounded-2xl border border-[color:var(--hairline)] bg-[color:var(--bg-surface)] p-4 text-sm leading-relaxed text-[color:var(--ivory)]/90">
+          {course.formatNote}
+        </p>
+
+        <ul className="mt-6 grid gap-2.5 sm:grid-cols-2">
+          {course.schedule.map((s) => (
+            <li
+              key={s}
+              className="flex items-start gap-2 rounded-xl border border-[color:var(--hairline)] bg-[color:var(--bg-surface)] px-4 py-3 text-sm text-[color:var(--ivory)]/90"
+            >
+              <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-[color:var(--gold)]" />
+              {s}
+            </li>
+          ))}
+        </ul>
+
+        <div className="mt-12 grid gap-10 sm:grid-cols-2">
+          <div>
+            <h2 className="font-serif text-2xl text-[color:var(--ivory)]">What you&apos;ll learn</h2>
+            <ul className="mt-4 space-y-3">
+              {course.learn.map((item) => (
+                <li key={item} className="flex items-start gap-2.5 text-sm leading-relaxed text-[color:var(--muted)]">
+                  <span className="mt-0.5 text-[color:var(--gold)]">✦</span>
+                  {item}
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          <div>
+            <h2 className="font-serif text-2xl text-[color:var(--ivory)]">What you&apos;ll need</h2>
+            <ul className="mt-4 space-y-3">
+              {course.need.map((item) => (
+                <li key={item} className="flex items-start gap-2.5 text-sm leading-relaxed text-[color:var(--muted)]">
+                  <span className="mt-0.5 text-[color:var(--purple-light,#a78bfa)]">›</span>
+                  {item}
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+
+        <div className="mt-12 flex flex-wrap items-center gap-4 border-t border-[color:var(--hairline)] pt-8">
+          <Link
+            href={course.payLink}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-2 rounded-full bg-[color:var(--gold)] px-7 py-3.5 text-sm font-semibold text-[color:var(--bg-void)] transition hover:brightness-110"
+          >
+            Pay &amp; Enrol ✨
+          </Link>
+          <Link
+            href="/#courses"
+            className="text-sm font-medium text-[color:var(--muted)] underline decoration-transparent underline-offset-4 transition hover:text-[color:var(--ivory)] hover:decoration-current"
+          >
+            Browse other courses
+          </Link>
         </div>
       </div>
-
-      <div className="mt-10 flex flex-wrap gap-3">
-        <CheckoutButton
-          courseKey={course.key}
-          courseTitle={course.title}
-          accent={course.accent}
-          wrapperClassName="flex-1 min-w-[160px]"
-          className="rounded-full bg-[var(--gold)] px-5 py-3 text-center text-sm font-semibold text-[#1a1408] transition hover:bg-[var(--gold-soft)] disabled:opacity-60"
-        />
-      </div>
-      <p className="mt-3 text-xs text-[var(--muted)]">
-        Your registration form opens automatically right after payment is confirmed —
-        there&apos;s no separate link to find.
-      </p>
-    </main>
+    </section>
   );
 }
