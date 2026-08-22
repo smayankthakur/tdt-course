@@ -68,11 +68,11 @@ export default function Home() {
           </div>
 
           <div className="nav-right">
-            <div className="lang-toggle">
+            {/* <div className="lang-toggle">
               <span className="active">EN</span>
               <span>हिंदी</span>
               <span>Hinglish</span>
-            </div>
+            </div> */}
             <a href="https://thedivinetarotonline.com/reading" className="nav-cta">
               Ask your question here
             </a>
