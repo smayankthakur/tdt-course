@@ -64,7 +64,7 @@ export default function Home() {
             <a href="https://thedivinetarotonline.com/reading">Reading</a>
             <a href="https://learn.thedivinetarotonline.com/">Course</a>
             <a href="https://thedivinetarotonline.com/kundli-milan">Kundli Milan</a>
-            <a href="https://thedivinetarotonline.co.in/" className="active">Personal Reading</a>
+            <a href="https://booking.thedivinetarotonline.com/" className="active">Personal Reading</a>
           </div>
 
           <div className="nav-right">
