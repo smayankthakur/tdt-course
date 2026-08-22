@@ -1,16 +1,50 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useRef, type ReactNode } from "react";
 
 const PAY_URL =
   process.env.NEXT_PUBLIC_RAZORPAY_PAY_URL || "https://rzp.io/rzp/8A6T0cz";
-const FORM_URL =
-  process.env.NEXT_PUBLIC_GOOGLE_FORM_URL ||
-  "https://docs.google.com/forms/d/e/1FAIpQLScOt9_M6dXtizMxsHsP9tyQ3hLUUXx2J9NrV_Naq7KyloKjAA/viewform";
+
+/** Fades an element up into view the first time it scrolls into the viewport. */
+function Reveal({
+  children,
+  delay = 0,
+  className = "",
+}: {
+  children: ReactNode;
+  delay?: number;
+  className?: string;
+}) {
+  const ref = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          el.classList.add("in-view");
+          observer.unobserve(el);
+        }
+      },
+      { threshold: 0.15 }
+    );
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
+
+  return (
+    <div
+      ref={ref}
+      className={`reveal ${className}`}
+      style={{ transitionDelay: `${delay}ms` }}
+    >
+      {children}
+    </div>
+  );
+}
 
 export default function Home() {
-  const [confirmed, setConfirmed] = useState(false);
-
   return (
     <>
       {/* NAV — exact structure/order per thedivinetarotonline.com header */}
@@ -46,116 +80,125 @@ export default function Home() {
         </div>
       </nav>
 
-      {/* HERO */}
-      <section className="hero">
-        <div className="hero-portrait">
-          <div className="hero-portrait-glow"></div>
-          <img src="/logo.png" alt="The Divine Tarot — Bharti Singh" />
-        </div>
-        <div className="eyebrow">The Divine Tarot</div>
-        <p className="namaste">Namaste, main hu Bharti Singh</p>
-        <h1>India&rsquo;s No.1 Psychic Tarot Reader</h1>
-        <p className="sub">
-          Tarot · Astro · Numero · Kundli Analysis · Face Reading · Psychic Ability
-        </p>
-        <a href="#book" className="btn gold">Book Your Personal Reading</a>
-      </section>
-
-      {/* BOOK — pricing + payment + form, all in one fast section */}
-      <section id="book">
-        <div className="container">
-          <div className="kicker">Book Now</div>
-          <h2>Voice Call Reading</h2>
-
-          {!confirmed ? (
-            <div className="price-card">
-              <span className="badge">40 Minutes · Voice Call</span>
-              <h3>Call Reading</h3>
-              <div className="amount">
-                ₹8,500<small>Tarot, Astro, Numero, Face Reading, Kundli Analysis &amp; Psychic</small>
-              </div>
-
-              <ul className="feature-list">
-                <li>Ask unlimited questions, up to 2 people including you</li>
-                <li>Appointment within 7–10 days · Mon–Fri · 12PM–8PM (IST)</li>
-                <li>No Refund Policy — please pay carefully</li>
-              </ul>
-
-              <a
-                href={PAY_URL}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="btn gold"
-                style={{ width: "100%", justifyContent: "center", marginBottom: 14 }}
-              >
-                Pay ₹8,500 on Razorpay
-              </a>
-
-              <button
-                className="btn ghost"
-                style={{ width: "100%", justifyContent: "center" }}
-                onClick={() => setConfirmed(true)}
-              >
-                I&rsquo;ve Completed My Payment
-              </button>
-            </div>
-          ) : (
-            <div className="form-reveal">
-              <div className="check">✓</div>
-              <h3 style={{ fontFamily: "'Cormorant Garamond', serif", fontStyle: "italic", fontSize: 20, marginBottom: 10 }}>
-                Thank you — one last step
-              </h3>
-              <p style={{ color: "var(--ivory-dim)", marginBottom: 24, fontSize: 14.5 }}>
-                Fill the Personal Reading form below with your details so your appointment
-                can be scheduled.
-              </p>
-              <a href={FORM_URL} target="_blank" rel="noopener noreferrer" className="btn gold">
-                Fill Personal Reading Form →
-              </a>
-            </div>
-          )}
-        </div>
-      </section>
-
-      {/* NOTES */}
-      <section id="notes">
-        <div className="container">
-          <div className="kicker">Please Read Before Booking</div>
-          <h2>Important Notes</h2>
-
-          <div className="notes" style={{ marginBottom: 32 }}>
-            <p>
-              We do not offer Tantra, Vashikaran, or free readings under any circumstance.
-              We don&rsquo;t cover legal matters, share market, lottery, child&rsquo;s gender,
-              or sexual questions.
-            </p>
-            <p>
-              <strong>No Refund Policy</strong> — payments are non-refundable. Your details
-              are kept strictly confidential, and this is a judgment-free space.
-            </p>
+      {/* HERO — 50/50 image + text, matching thedivinetarotonline.com's split layout */}
+      <section className="hero-split">
+        <div className="container hero-split-inner">
+          <div className="hero-media">
+            <div className="hero-media-glow"></div>
+            <img
+              src="/hero-portrait.jpg"
+              alt="Bharti Singh — The Divine Tarot"
+              className="hero-media-img"
+            />
+            <div className="hero-media-frame"></div>
           </div>
 
-          <details className="tc">
-            <summary>Full Terms &amp; Conditions</summary>
-            <div className="tc-body">
-              <p>
-                We are certified and experienced in Astrology, Numerology, Psychic Tarot
-                Card Reading, Vedic Kundli Analysis, Candle Wax Reading, Coffee Cup
-                Reading, and other spiritual guidance practices.
-              </p>
-              <p>We do not provide sugar-coated readings. Our purpose is to deliver honest messages as guided by the universe with complete sincerity.</p>
-              <p>We strictly DO NOT offer any services related to Tantra, Vashikaran, black magic, or any unethical practices. Please do not request such services.</p>
-              <p>We do not provide readings on: legal matters, court cases, share market, lottery, gambling, child gender prediction, or explicit/sexual questions.</p>
-              <p>All readings are for guidance purposes only. Please use your own judgment and decision-making.</p>
-              <p>When asking about another person&rsquo;s feelings, please understand that energies and emotions can change over time, as every individual has free will.</p>
-              <p>We do not offer FREE readings under any circumstances.</p>
-              <p><strong>No Refund Policy:</strong> once payment is made, it is non-refundable under any situation. Please make your payment only after reading all details carefully.</p>
-              <p>Your privacy is our priority. All information shared (name, photos, personal details) is kept strictly confidential.</p>
-              <p>This is a safe and judgment-free space. No matter your situation (including relationships, personal choices, or identity), you are respected and heard with compassion.</p>
-              <p>&ldquo;The Divine Tarot&rdquo; is a legally registered brand. Any unauthorized copying of content, name, or material may lead to legal action.</p>
-              <p>By paying on this page, you agree to share the information entered with The Divine Tarot (owner of this page) and Razorpay, in accordance with applicable laws.</p>
+          <div className="hero-copy">
+            <div className="eyebrow">The Divine Tarot</div>
+            <p className="namaste">Namaste, main hu Bharti Singh</p>
+            <h1>India&rsquo;s No.1 Psychic Tarot Reader</h1>
+            <p className="sub">
+              Expert in Tarot, Astro, Numero, Hoodoo, Runes, Dice, Coffee Cup,
+              Psychic Ability, Face Analysis, Candle Wax Reading, Kundli Analysis,
+              Kundli Milan &amp; a Manifestation Coach.
+            </p>
+            <div className="hero-actions">
+              <a href="#book" className="btn gold">Book Your Personal Reading</a>
             </div>
-          </details>
+            <div className="hero-stats">
+              <div>
+                <strong>7L+</strong>
+                <span>Seekers Guided</span>
+              </div>
+              <div>
+                <strong>40 Min</strong>
+                <span>Voice Call Reading</span>
+              </div>
+              <div>
+                <strong>100%</strong>
+                <span>Confidential</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* BOOK + NOTES — inline side by side */}
+      <section id="book">
+        <div className="container">
+          <Reveal>
+            <div className="kicker">Book Now</div>
+            <h2>Voice Call Reading</h2>
+          </Reveal>
+
+          <div className="book-notes-grid">
+            <Reveal delay={80}>
+              <div className="price-card">
+                <span className="badge">40 Minutes · Voice Call</span>
+                <h3>Call Reading</h3>
+                <div className="amount">
+                  ₹8,500<small>Tarot, Astro, Numero, Face Reading, Kundli Analysis &amp; Psychic</small>
+                </div>
+
+                <ul className="feature-list">
+                  <li>Ask unlimited questions, up to 2 people including you</li>
+                  <li>Appointment within 7–10 days · Mon–Fri · 12PM–8PM (IST)</li>
+                  <li>No Refund Policy — please pay carefully</li>
+                </ul>
+
+                <a
+                  href={PAY_URL}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="btn gold"
+                  style={{ width: "100%", justifyContent: "center" }}
+                >
+                  Pay ₹8,500 on Razorpay
+                </a>
+              </div>
+            </Reveal>
+
+            <Reveal delay={180}>
+              <div className="notes-card">
+                <div className="notes-card-heading">Please Read Before Booking</div>
+                <div className="notes">
+                  <p>
+                    We do not offer Tantra, Vashikaran, or free readings under any
+                    circumstance. We don&rsquo;t cover legal matters, share market,
+                    lottery, child&rsquo;s gender, or sexual questions.
+                  </p>
+                  <p>
+                    <strong>No Refund Policy</strong> — payments are non-refundable.
+                    Your details are kept strictly confidential, and this is a
+                    judgment-free space.
+                  </p>
+                </div>
+
+                <details className="tc">
+                  <summary>Full Terms &amp; Conditions</summary>
+                  <div className="tc-body">
+                    <p>
+                      We are certified and experienced in Astrology, Numerology,
+                      Psychic Tarot Card Reading, Vedic Kundli Analysis, Candle Wax
+                      Reading, Coffee Cup Reading, and other spiritual guidance
+                      practices.
+                    </p>
+                    <p>We do not provide sugar-coated readings. Our purpose is to deliver honest messages as guided by the universe with complete sincerity.</p>
+                    <p>We strictly DO NOT offer any services related to Tantra, Vashikaran, black magic, or any unethical practices. Please do not request such services.</p>
+                    <p>We do not provide readings on: legal matters, court cases, share market, lottery, gambling, child gender prediction, or explicit/sexual questions.</p>
+                    <p>All readings are for guidance purposes only. Please use your own judgment and decision-making.</p>
+                    <p>When asking about another person&rsquo;s feelings, please understand that energies and emotions can change over time, as every individual has free will.</p>
+                    <p>We do not offer FREE readings under any circumstances.</p>
+                    <p><strong>No Refund Policy:</strong> once payment is made, it is non-refundable under any situation. Please make your payment only after reading all details carefully.</p>
+                    <p>Your privacy is our priority. All information shared (name, photos, personal details) is kept strictly confidential.</p>
+                    <p>This is a safe and judgment-free space. No matter your situation (including relationships, personal choices, or identity), you are respected and heard with compassion.</p>
+                    <p>&ldquo;The Divine Tarot&rdquo; is a legally registered brand. Any unauthorized copying of content, name, or material may lead to legal action.</p>
+                    <p>By paying on this page, you agree to share the information entered with The Divine Tarot (owner of this page) and Razorpay, in accordance with applicable laws.</p>
+                  </div>
+                </details>
+              </div>
+            </Reveal>
+          </div>
         </div>
       </section>
 
