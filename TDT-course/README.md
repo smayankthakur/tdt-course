@@ -8,7 +8,7 @@ purple/gold "cosmic" identity, fully data-driven.
 
 ```bash
 npm install
-cp .env.local.example .env.local   # then fill in RAZORPAY_KEY_SECRET
+cp .env.local.example .env.local   # fill in both Razorpay values
 npm run dev
 ```
 
@@ -16,66 +16,60 @@ Visit http://localhost:3000.
 
 ## Adding or editing a course
 
-Everything about a course — copy, schedule, price, learn/need lists, payment
-link, form link, accent color, image, slug — lives in one place:
+Everything about a course — copy, schedule, price, amount, learn/need
+lists, form link, accent color, image, slug — lives in one place:
 
 ```
 lib/courses.ts
 ```
 
 Add or edit an object in the `courses` array and the homepage grid, the
-`/courses/[slug]` page, and the payment-success flow all update
-automatically.
+`/courses/[slug]` page, and checkout all update automatically.
 
-## Payment → registration flow (gated, not a guess)
+## Payment → registration flow
 
-The registration form is **never linked directly** anywhere on the site.
-It only appears after a Razorpay Payment Link redirects back with a
-verified, signed "paid" status. If verification fails or is missing, the
-visitor is told to buy the course instead — no direct link is exposed.
+There is **no visible payment link or Google Form link anywhere on the
+site.** Both only exist in server-side data (`lib/courses.ts`) and are
+only ever used behind the scenes. The registration form is handed to the
+browser exactly once: after a real, cryptographically verified payment.
 
-**Required setup, per course, in the Razorpay Dashboard:**
+**How it works:**
 
-1. Open **Payment Links → [that course's link] → Settings**.
-2. Enable **"Redirect URL"** and set it to:
-   ```
-   https://<your-domain>/payment-success?course=<slug>
-   ```
-   Slugs (from `lib/courses.ts`):
-   | Course | Slug |
-   |---|---|
-   | Heal WITHIN | `heal-within` |
-   | Tarot Workshop | `tarot-workshop` |
-   | Tarot: Beginning to Advance | `tarot-beginning-to-advance` |
-   | Tarot Pro | `tarot-pro` |
-   | Runes: Beginning to Advance | `runes-beginning-to-advance` |
-   | Dice: Beginning to Advance | `dice-beginning-to-advance` |
-   | Candle Wax Full Course | `candle-wax-full-course` |
-3. Set `RAZORPAY_KEY_SECRET` (Dashboard → Settings → API Keys → Key Secret)
-   as an environment variable on your deploy (Vercel → Project → Settings →
-   Environment Variables), and in `.env.local` for local testing.
+1. Visitor clicks "Pay & Enrol" → the browser calls `POST /api/create-order`
+   with just the course key. The server (`lib/razorpay.ts`, using
+   `RAZORPAY_KEY_ID` + `RAZORPAY_KEY_SECRET`) creates a Razorpay Order for
+   that course's exact amount — the client never sends or controls the
+   price.
+2. Razorpay's Checkout.js opens an embedded payment modal (no redirect to
+   an external page, no new tab).
+3. On completion, Checkout.js hands the browser a payment ID + signature.
+   The browser sends those to `POST /api/verify-payment`, which:
+   - recomputes the HMAC signature server-side and rejects any mismatch,
+   - re-fetches the order from Razorpay to confirm it's genuinely marked
+     `paid` and belongs to the course being claimed (stops a signature for
+     one course being replayed against another),
+   - only then returns that course's Google Form URL in the response.
+4. The browser opens the form automatically in a new tab. If the popup is
+   blocked, a "Didn't open? Click here" button appears using the same
+   verified URL — never a hardcoded one.
+5. If the visitor closes the checkout modal without paying, or verification
+   fails for any reason, they land back on "Pay & Enrol" with no form
+   access — the only way forward is to actually pay.
 
-**How it works end to end:**
+## Required Vercel environment variables
 
-1. Visitor clicks "Pay & Enrol" → goes to the Razorpay Payment Link in the
-   **same tab** (this is required for the redirect to land back on the
-   site — see `components/EnrolButton.tsx`).
-2. After a completed payment, Razorpay redirects the browser to
-   `/payment-success?course=<slug>&razorpay_payment_id=...&razorpay_signature=...`.
-3. `app/payment-success/page.tsx` verifies that signature **server-side**
-   (`lib/razorpay.ts`, using `RAZORPAY_KEY_SECRET` — never exposed to the
-   client) and checks the status is `"paid"`.
-   - **Verified:** the page shows a confirmation and opens the course's
-     Google Form (auto-open after ~1.2s, plus a manual button as a
-     fallback in case the browser blocks the automatic open).
-   - **Not verified** (missing/invalid signature, wrong status, or someone
-     just visits that URL directly without paying): the page tells them
-     the payment isn't confirmed and shows a **"Buy [Course]"** button
-     back to the Payment Link instead. No form access.
+Set these in **Vercel → your project → Settings → Environment Variables**
+(add to both Production and Preview), from **Razorpay Dashboard → Settings
+→ API Keys**:
 
-This means someone can't reach the registration form by guessing or
-sharing the `/payment-success` URL — the signature can only be produced by
-Razorpay for a real, completed payment on that specific link.
+| Variable | Value | Exposed to browser? |
+|---|---|---|
+| `RAZORPAY_KEY_ID` | Your Razorpay Key ID (e.g. `rzp_live_...`) | Yes — needed by Checkout.js, not secret |
+| `RAZORPAY_KEY_SECRET` | Your Razorpay Key Secret | **No** — server-only, used to create/verify orders |
+
+Without these, `/api/create-order` will fail closed with a clear error —
+checkout simply won't start, rather than silently accepting unpaid
+"successful" registrations.
 
 ## Images
 
@@ -85,7 +79,7 @@ same filenames, or update the `image` field per course in `lib/courses.ts`.
 
 ## Deploying
 
-Push to a git repo and import into Vercel. Set `RAZORPAY_KEY_SECRET` in the
-Vercel project's environment variables before going live — without it,
-`/payment-success` will correctly refuse to verify anyone's payment (fails
-closed, not open).
+Push to a git repo, import into Vercel, set the two environment variables
+above, then deploy. No Razorpay Payment Links or dashboard redirect
+configuration are needed — orders are created and verified entirely
+through this app's own API routes.

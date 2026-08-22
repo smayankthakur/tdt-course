@@ -5,13 +5,14 @@ export interface Course {
   badge: string;
   accent: string;
   price: string;
+  /** Amount in paise (INR × 100) — required by the Razorpay Orders API. */
+  amountInPaise: number;
   image: string;
   blurb: string;
   schedule: string[];
   learn: string[];
   need: string[];
   info: string;
-  paymentUrl: string;
   formUrl: string;
 }
 
@@ -41,7 +42,7 @@ export const courses: Course[] = [
       "Consistent weekly attendance",
     ],
     info: "<b>Offline, in-person</b> — weekly Sundays for <b>1 year</b>. Venue TBC.",
-    paymentUrl: "https://rzp.io/rzp/JdMP80qp",
+    amountInPaise: 1500000, // ₹15,000
     formUrl: "https://forms.gle/ZX8m5pNGpKHrnUwY7",
   },
   {
@@ -68,7 +69,7 @@ export const courses: Course[] = [
       "Notebook & pen",
     ],
     info: "Single-day, 2-hour <b>workshop</b> — one-time session, no ongoing access.",
-    paymentUrl: "https://rzp.io/rzp/UsKBd1F",
+    amountInPaise: 500000, // ₹5,000
     formUrl: "https://forms.gle/avdYDMycGPsmHoiq6",
   },
   {
@@ -102,7 +103,7 @@ export const courses: Course[] = [
       "Practice between classes",
     ],
     info: "<b>Live batch</b> — 4 months, Fri & Sat 8–10 PM, Sun 12–2 PM. Exams, practice, Q&A, <b>1-yr</b> video access.",
-    paymentUrl: "https://rzp.io/rzp/fWD6L2a",
+    amountInPaise: 10000000, // ₹1,00,000
     formUrl: "https://forms.gle/XScdePbyh4YP7BiX6",
   },
   {
@@ -134,7 +135,7 @@ export const courses: Course[] = [
       "Consistent attendance",
     ],
     info: "<b>Live batch</b> — 2 months (6 months total with Beginner batch). Fee for this batch: <b>₹2,00,000</b>.",
-    paymentUrl: "https://rzp.io/rzp/uNgw2T4",
+    amountInPaise: 20000000, // ₹2,00,000
     formUrl: "https://forms.gle/eWUgVgoS7rHm1b2g7",
   },
   {
@@ -162,7 +163,7 @@ export const courses: Course[] = [
     ],
     need: ["A rune set (guidance shared beforehand)", "Notebook", "Reliable internet (Sat/Sun)"],
     info: "<b>Live batch</b> — 3 months, Sat 8–10 PM, Sun 12–2 PM. Exams, practice, Q&A, <b>1-yr</b> video access.",
-    paymentUrl: "https://rzp.io/rzp/wfh8B9vv",
+    amountInPaise: 10000000, // ₹1,00,000
     formUrl: "https://forms.gle/V88qxjTv1g5w6iiKA",
   },
   {
@@ -190,7 +191,7 @@ export const courses: Course[] = [
     ],
     need: ["A dice set (details shared beforehand)", "Notebook", "Reliable internet (Sat/Sun)"],
     info: "<b>Live batch</b> — 3 months, Sat 8–10 PM, Sun 12–2 PM. Exams, practice, Q&A, <b>1-yr</b> video access.",
-    paymentUrl: "https://rzp.io/rzp/s7XosLAt",
+    amountInPaise: 10000000, // ₹1,00,000
     formUrl: "https://forms.gle/kKw2n49ezfsArUqJ9",
   },
   {
@@ -222,7 +223,7 @@ export const courses: Course[] = [
       "Reliable internet (Sat/Sun)",
     ],
     info: "<b>Live batch</b> — ~2 months, Sat 8–10 PM, Sun 12–2 PM. Exams, practice, Q&A, <b>1-yr</b> video access.",
-    paymentUrl: "https://rzp.io/rzp/nmDQu8QA",
+    amountInPaise: 10000000, // ₹1,00,000
     formUrl: "https://forms.gle/1sKFhUei73Muke7D9",
   },
 ];

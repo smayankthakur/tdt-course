@@ -3,7 +3,7 @@
 import { useEffect, useRef } from "react";
 import Image from "next/image";
 import type { Course } from "@/lib/courses";
-import EnrolButton from "@/components/EnrolButton";
+import CheckoutButton from "@/components/CheckoutButton";
 
 interface CourseModalProps {
   course: Course | null;
@@ -137,9 +137,12 @@ export default function CourseModal({ course, onClose }: CourseModalProps) {
         </div>
 
         <div className="mt-6 flex flex-wrap gap-3">
-          <EnrolButton
-            paymentUrl={course.paymentUrl}
-            className="flex-1 min-w-[140px] rounded-full bg-[var(--gold)] px-4 py-2.5 text-center text-sm font-semibold text-[#1a1408] transition hover:bg-[var(--gold-soft)]"
+          <CheckoutButton
+            courseKey={course.key}
+            courseTitle={course.title}
+            accent={course.accent}
+            wrapperClassName="flex-1 min-w-[140px]"
+            className="rounded-full bg-[var(--gold)] px-4 py-2.5 text-center text-sm font-semibold text-[#1a1408] transition hover:bg-[var(--gold-soft)] disabled:opacity-60"
           />
           <button
             type="button"

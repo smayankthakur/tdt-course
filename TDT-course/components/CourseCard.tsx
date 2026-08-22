@@ -3,7 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import type { Course } from "@/lib/courses";
-import EnrolButton from "@/components/EnrolButton";
+import CheckoutButton from "@/components/CheckoutButton";
 
 interface CourseCardProps {
   course: Course;
@@ -45,9 +45,11 @@ export default function CourseCard({ course, onOpenDetails }: CourseCardProps) {
         </ul>
         <div className="mt-auto pt-5">
           <div className="flex flex-wrap gap-2">
-            <EnrolButton
-              paymentUrl={course.paymentUrl}
-              className="flex-1 rounded-full bg-[var(--gold)] px-4 py-2 text-center text-sm font-semibold text-[#1a1408] transition hover:bg-[var(--gold-soft)]"
+            <CheckoutButton
+              courseKey={course.key}
+              courseTitle={course.title}
+              accent={course.accent}
+              className="rounded-full bg-[var(--gold)] px-4 py-2 text-center text-sm font-semibold text-[#1a1408] transition hover:bg-[var(--gold-soft)] disabled:opacity-60"
             />
             <button
               type="button"

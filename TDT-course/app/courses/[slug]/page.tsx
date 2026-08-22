@@ -3,7 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { courses, getCourseBySlug } from "@/lib/courses";
-import EnrolButton from "@/components/EnrolButton";
+import CheckoutButton from "@/components/CheckoutButton";
 
 interface PageProps {
   params: Promise<{ slug: string }>;
@@ -104,9 +104,12 @@ export default async function CourseDetailPage({ params }: PageProps) {
       </div>
 
       <div className="mt-10 flex flex-wrap gap-3">
-        <EnrolButton
-          paymentUrl={course.paymentUrl}
-          className="flex-1 min-w-[160px] rounded-full bg-[var(--gold)] px-5 py-3 text-center text-sm font-semibold text-[#1a1408] transition hover:bg-[var(--gold-soft)]"
+        <CheckoutButton
+          courseKey={course.key}
+          courseTitle={course.title}
+          accent={course.accent}
+          wrapperClassName="flex-1 min-w-[160px]"
+          className="rounded-full bg-[var(--gold)] px-5 py-3 text-center text-sm font-semibold text-[#1a1408] transition hover:bg-[var(--gold-soft)] disabled:opacity-60"
         />
       </div>
       <p className="mt-3 text-xs text-[var(--muted)]">
