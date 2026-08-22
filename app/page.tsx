@@ -59,12 +59,12 @@ export default function Home() {
           </a>
 
           <div className="nav-links">
-            <a href="https://thedivinetarotonline.com/" className="active">Home</a>
+            <a href="https://thedivinetarotonline.com/">Home</a>
             <a href="https://thedivinetarotonline.com/about">About</a>
             <a href="https://thedivinetarotonline.com/reading">Reading</a>
             <a href="https://learn.thedivinetarotonline.com/">Course</a>
             <a href="https://thedivinetarotonline.com/kundli-milan">Kundli Milan</a>
-            <a href="https://thedivinetarotonline.co.in/">Personal Reading</a>
+            <a href="https://thedivinetarotonline.co.in/" className="active">Personal Reading</a>
           </div>
 
           <div className="nav-right">
@@ -221,7 +221,7 @@ export default function Home() {
             <ul className="footer-links">
               <li><a href="https://thedivinetarotonline.com/about">About</a></li>
               <li><a href="https://thedivinetarotonline.com/reading">Readings</a></li>
-              <li><a href="https://learn.thedivinetarotonline.com/">Premium</a></li>
+              <li><a href="https://thedivinetarotonline.com/reading?upgrade=1">Premium</a></li>
             </ul>
           </div>
 
@@ -231,9 +231,9 @@ export default function Home() {
               <a href="https://instagram.com/thedivineetarot" target="_blank" rel="noreferrer" aria-label="Instagram">◎</a>
               <a href="https://facebook.com/profile.php?id=61578567343068" target="_blank" rel="noreferrer" aria-label="Facebook">f</a>
               <a href="https://youtube.com/@TheDivineTarot" target="_blank" rel="noreferrer" aria-label="YouTube">▶</a>
-              <a href="https://youtube.com/@TheDivineTarot" target="_blank" rel="noreferrer" aria-label="YouTube">▶</a>
+              <a href="https://youtube.com/@thedivineetarot" target="_blank" rel="noreferrer" aria-label="YouTube (2nd Channel)">▶</a>
             </div>
-            <a href="/privacy" className="footer-privacy-link">Privacy</a>
+            <a href="https://thedivinetarotonline.com/privacy" className="footer-privacy-link">Privacy</a>
           </div>
 
           <div className="footer-col">
@@ -255,9 +255,9 @@ export default function Home() {
         </div>
 
         <div className="footer-bottom">
-          <span>Designed by <a href="#" target="_blank" rel="noreferrer">Sitelytc</a></span>
+          <span>Designed by <a href="https://sitelytc.com/" target="_blank" rel="noreferrer">Sitelytc</a></span>
           <span className="footer-bottom-right">
-            <a href="/privacy">Privacy</a> · {new Date().getFullYear()}
+            <a href="https://thedivinetarotonline.com/privacy">Privacy</a> · © {new Date().getFullYear()} The Divine Tarot. All rights reserved.
           </span>
         </div>
       </footer>
