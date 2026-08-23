@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import "./globals.css";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import MysticBackground from "@/components/MysticBackground";
+import BackToTop from "@/components/BackToTop";
 
 export const metadata: Metadata = {
   title: "Our Courses | The Divine Tarot",
@@ -24,9 +26,13 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en">
       <body className="antialiased">
-        <Header />
-        <main>{children}</main>
-        <Footer />
+        <MysticBackground />
+        <div className="relative z-10">
+          <Header />
+          <main>{children}</main>
+          <Footer />
+        </div>
+        <BackToTop />
       </body>
     </html>
   );

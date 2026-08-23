@@ -1,6 +1,7 @@
 import Link from "next/link";
 import CoursesGrid from "@/components/CoursesGrid";
 import MoonPhases from "@/components/MoonPhases";
+import Reveal from "@/components/Reveal";
 
 const steps = [
   {
@@ -40,6 +41,19 @@ export default function Home() {
     <>
       {/* Hero */}
       <section className="relative overflow-hidden px-5 pb-20 pt-16 sm:px-8 sm:pt-24">
+        <div
+          className="hero-ken-burns absolute inset-0 bg-cover bg-center"
+          style={{ backgroundImage: "url(/courses/heal-within.png)" }}
+          aria-hidden="true"
+        />
+        <div
+          className="absolute inset-0"
+          style={{
+            background:
+              "linear-gradient(180deg, rgba(16,10,28,0.88) 0%, rgba(16,10,28,0.85) 45%, var(--bg-void) 92%), radial-gradient(ellipse 700px 400px at 50% 20%, rgba(109,40,217,0.35), transparent 70%)",
+          }}
+          aria-hidden="true"
+        />
         <div className="starfield pointer-events-none absolute inset-0 opacity-40" />
         <div className="relative mx-auto max-w-4xl text-center">
           <p
@@ -98,23 +112,24 @@ export default function Home() {
       {/* How to enroll */}
       <section id="how-it-works" className="px-5 py-16 sm:px-8 sm:py-20">
         <div className="mx-auto max-w-6xl">
-          <div className="mx-auto max-w-2xl text-center">
+          <Reveal className="mx-auto max-w-2xl text-center">
             <h2 className="font-serif text-3xl text-[color:var(--ivory)] sm:text-4xl">How to Enrol</h2>
             <p className="mt-3 text-[color:var(--muted)]">
               Six steps between deciding to learn and holding your certificate.
             </p>
-          </div>
+          </Reveal>
 
           <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            {steps.map((s) => (
-              <div
-                key={s.n}
-                className="rounded-2xl border border-[color:var(--hairline)] bg-[color:var(--bg-surface)] p-6"
-              >
-                <span className="font-serif text-3xl text-[color:var(--gold)]">{s.n}</span>
-                <h3 className="mt-3 font-serif text-xl text-[color:var(--ivory)]">{s.title}</h3>
-                <p className="mt-2 text-sm leading-relaxed text-[color:var(--muted)]">{s.body}</p>
-              </div>
+            {steps.map((s, i) => (
+              <Reveal key={s.n} delay={i * 90}>
+                <div className="group rounded-2xl border border-[color:var(--hairline)] bg-[color:var(--bg-surface)] p-6 transition-all duration-300 hover:-translate-y-1 hover:border-[color:var(--gold)]/50 hover:shadow-[0_16px_36px_-12px_rgba(212,175,106,0.22)]">
+                  <span className="font-serif text-3xl text-[color:var(--gold)] transition-transform duration-300 group-hover:scale-110">
+                    {s.n}
+                  </span>
+                  <h3 className="mt-3 font-serif text-xl text-[color:var(--ivory)]">{s.title}</h3>
+                  <p className="mt-2 text-sm leading-relaxed text-[color:var(--muted)]">{s.body}</p>
+                </div>
+              </Reveal>
             ))}
           </div>
         </div>
@@ -125,7 +140,7 @@ export default function Home() {
       {/* Courses */}
       <section id="courses" className="px-5 py-16 sm:px-8 sm:py-20">
         <div className="mx-auto max-w-6xl">
-          <div className="mx-auto max-w-2xl text-center">
+          <Reveal className="mx-auto max-w-2xl text-center">
             <h2 className="font-serif text-3xl text-[color:var(--ivory)] sm:text-4xl">
               Upcoming Live Batches
             </h2>
@@ -134,7 +149,7 @@ export default function Home() {
               your place before a batch fills up. Dates are provisional; please confirm before
               booking.
             </p>
-          </div>
+          </Reveal>
 
           <div className="mt-12">
             <CoursesGrid />

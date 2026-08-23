@@ -139,3 +139,131 @@ body {
     animation: none !important;
   }
 }
+
+/* ---------- Witchy atmosphere ---------- */
+
+@keyframes twinkle {
+  0%, 100% { opacity: 0.25; transform: scale(0.85); }
+  50% { opacity: 1; transform: scale(1.15); }
+}
+
+@keyframes emberRise {
+  0% {
+    transform: translateY(0) translateX(0);
+    opacity: 0;
+  }
+  10% { opacity: 0.9; }
+  90% { opacity: 0.5; }
+  100% {
+    transform: translateY(-100vh) translateX(var(--drift, 20px));
+    opacity: 0;
+  }
+}
+
+@keyframes fogDrift {
+  0% { transform: translateX(-5%) translateY(0); }
+  50% { transform: translateX(3%) translateY(-2%); }
+  100% { transform: translateX(-5%) translateY(0); }
+}
+
+@keyframes moonPulse {
+  0%, 100% { opacity: 0.45; transform: scale(1); }
+  50% { opacity: 0.65; transform: scale(1.06); }
+}
+
+.mystic-bg {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.mystic-star {
+  position: absolute;
+  border-radius: 9999px;
+  background: var(--gold-light, #ecd9a8);
+  animation: twinkle 3.5s ease-in-out infinite;
+}
+
+.mystic-ember {
+  position: absolute;
+  bottom: -5%;
+  border-radius: 9999px;
+  background: radial-gradient(circle, var(--gold) 0%, transparent 70%);
+  animation: emberRise linear infinite;
+}
+
+.mystic-fog {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(60px);
+  animation: fogDrift 22s ease-in-out infinite;
+}
+
+.mystic-moon {
+  position: absolute;
+  border-radius: 9999px;
+  filter: blur(2px);
+  animation: moonPulse 6s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mystic-star,
+  .mystic-ember,
+  .mystic-fog,
+  .mystic-moon {
+    animation: none !important;
+  }
+}
+
+/* ---------- Hero Ken Burns background ---------- */
+
+@keyframes heroZoom {
+  0% { transform: scale(1); }
+  100% { transform: scale(1.08); }
+}
+
+.hero-ken-burns {
+  animation: heroZoom 18s ease-in-out infinite alternate;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-ken-burns {
+    animation: none !important;
+  }
+}
+
+/* ---------- Animated scrollbar ---------- */
+
+@keyframes scrollbarShift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+html {
+  scrollbar-width: thin;
+  scrollbar-color: var(--gold) var(--bg-void);
+}
+
+::-webkit-scrollbar {
+  width: 12px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg-void);
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, var(--gold-light, #ecd9a8), var(--purple), var(--gold));
+  background-size: 100% 300%;
+  border-radius: 9999px;
+  border: 2px solid var(--bg-void);
+  animation: scrollbarShift 6s ease-in-out infinite;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(180deg, var(--gold), var(--purple-light, #a78bfa), var(--gold-light, #ecd9a8));
+  background-size: 100% 300%;
+}
