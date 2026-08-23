@@ -10,14 +10,14 @@ export default function CourseCard({
   onOpenDetails: () => void;
 }) {
   return (
-    <div className="group relative flex flex-col overflow-hidden rounded-3xl border border-[color:var(--hairline)] bg-[color:var(--bg-surface)] transition hover:border-[color:var(--gold)]/50">
+    <div className="group relative flex flex-col overflow-hidden rounded-3xl border border-[color:var(--hairline)] bg-[color:var(--bg-surface)] transition-all duration-300 hover:-translate-y-1.5 hover:border-[color:var(--gold)]/50 hover:shadow-[0_20px_45px_-15px_rgba(212,175,106,0.25)]">
       <div className="relative flex h-40 items-center justify-center overflow-hidden bg-[color:var(--bg-surface-2)]">
         {course.image ? (
           // eslint-disable-next-line @next/next/no-img-element
           <img
             src={course.image}
             alt={course.title}
-            className="absolute inset-0 h-full w-full object-cover"
+            className="absolute inset-0 h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
           />
         ) : (
           <div

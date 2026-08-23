@@ -17,6 +17,7 @@ export const courses: Course[] = [
   {
     slug: "heal-within",
     glyph: "moon",
+    image: "/courses/heal-within.png",
     tag: "Offline · Membership",
     price: "₹15,000",
     title: "Heal WITHIN",
@@ -42,6 +43,7 @@ export const courses: Course[] = [
   {
     slug: "tarot-workshop",
     glyph: "workshop",
+    image: "/courses/tarot-workshop.png",
     tag: "Workshop",
     price: "₹5,000",
     title: "Tarot Workshop",
@@ -62,7 +64,7 @@ export const courses: Course[] = [
   {
     slug: "tarot-beginning-to-advance",
     glyph: "tarot",
-    image: "https://learn.thedivinetarotonline.com/images/221f368322aa50b5adb8d520bdf3bbd0.png",
+    image: "/courses/tarot-beginning-to-advance.png",
     tag: "Live Batch",
     price: "₹1,00,000",
     title: "Tarot: Beginner's to Advance",
@@ -89,7 +91,7 @@ export const courses: Course[] = [
   {
     slug: "tarot-pro",
     glyph: "tarotPro",
-    image: "https://learn.thedivinetarotonline.com/images/51960be84230e86eef749cd77a2fa332.png",
+    image: "/courses/tarot-pro.png",
     tag: "Live Batch",
     price: "₹2,00,000",
     title: "Tarot Pro",
@@ -115,7 +117,7 @@ export const courses: Course[] = [
   {
     slug: "runes-beginning-to-advance",
     glyph: "runes",
-    image: "https://learn.thedivinetarotonline.com/images/e9d8e5d2ca0a71a727d32b6f406ce664.png",
+    image: "/courses/runes-beginning-to-advance.png",
     tag: "Live Batch",
     price: "₹1,00,000",
     title: "Runes: Beginner's to Advance",
@@ -141,7 +143,7 @@ export const courses: Course[] = [
   {
     slug: "dice-beginning-to-advance",
     glyph: "dice",
-    image: "https://learn.thedivinetarotonline.com/images/b3367a022978047af5b1c85224883ec6.png",
+    image: "/courses/dice-beginning-to-advance.png",
     tag: "Live Batch",
     price: "₹1,00,000",
     title: "Dice: Beginner's to Advance",
@@ -167,7 +169,7 @@ export const courses: Course[] = [
   {
     slug: "candle-wax-full-course",
     glyph: "candle",
-    image: "https://learn.thedivinetarotonline.com/images/dfb6d63143f19aac3492408c13ab48a1.jpg",
+    image: "/courses/candle-wax-full-course.png",
     tag: "Live Batch",
     price: "₹1,00,000",
     title: "Candle Wax Reading Course",

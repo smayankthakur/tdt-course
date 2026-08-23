@@ -11,8 +11,14 @@ export default function CoursesGrid() {
   return (
     <>
       <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-        {courses.map((course) => (
-          <CourseCard key={course.slug} course={course} onOpenDetails={() => setSelected(course)} />
+        {courses.map((course, i) => (
+          <div
+            key={course.slug}
+            className="animate-fade-in-up"
+            style={{ animationDelay: `${Math.min(i, 6) * 80}ms` }}
+          >
+            <CourseCard course={course} onOpenDetails={() => setSelected(course)} />
+          </div>
         ))}
       </div>
 

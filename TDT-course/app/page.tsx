@@ -42,33 +42,52 @@ export default function Home() {
       <section className="relative overflow-hidden px-5 pb-20 pt-16 sm:px-8 sm:pt-24">
         <div className="starfield pointer-events-none absolute inset-0 opacity-40" />
         <div className="relative mx-auto max-w-4xl text-center">
-          <p className="text-2xl tracking-[0.3em] text-[color:var(--gold)]" aria-hidden="true">
+          <p
+            className="animate-fade-in-up animate-float-glyphs text-2xl tracking-[0.3em] text-[color:var(--gold)]"
+            style={{ animationDelay: "0ms" }}
+            aria-hidden="true"
+          >
             ✨ 🌙 🔮 ✦
           </p>
-          <p className="mt-4 font-serif text-sm uppercase tracking-[0.35em] text-[color:var(--gold)]">
+          <p
+            className="animate-fade-in-up mt-4 font-serif text-sm uppercase tracking-[0.35em] text-[color:var(--gold)]"
+            style={{ animationDelay: "80ms" }}
+          >
             Learn The Sacred Arts
           </p>
-          <h1 className="mt-6 font-serif text-4xl leading-[1.1] text-[color:var(--ivory)] sm:text-6xl">
+          <h1
+            className="animate-fade-in-up mt-6 font-serif text-4xl leading-[1.1] text-[color:var(--ivory)] sm:text-6xl"
+            style={{ animationDelay: "160ms" }}
+          >
             Our <span className="italic text-[color:var(--gold-light,#ecd9a8)]">Courses</span>
           </h1>
-          <p className="mx-auto mt-6 max-w-2xl text-base leading-relaxed text-[color:var(--muted)] sm:text-lg">
+          <p
+            className="animate-fade-in-up mx-auto mt-6 max-w-2xl text-base leading-relaxed text-[color:var(--muted)] sm:text-lg"
+            style={{ animationDelay: "240ms" }}
+          >
             Step into the world of divination. From your first tarot spread to advanced
             intuitive mastery, learn to read cards, runes, wax and dice — and offer guidance
             that genuinely resonates.
           </p>
-          <p className="mt-4 text-sm tracking-wide text-[color:var(--gold)]">
+          <p
+            className="animate-fade-in-up mt-4 text-sm tracking-wide text-[color:var(--gold)]"
+            style={{ animationDelay: "300ms" }}
+          >
             ✦ Click any course to begin your journey ✦
           </p>
-          <div className="mt-9 flex flex-wrap items-center justify-center gap-4">
+          <div
+            className="animate-fade-in-up mt-9 flex flex-wrap items-center justify-center gap-4"
+            style={{ animationDelay: "360ms" }}
+          >
             <Link
               href="#courses"
-              className="rounded-full bg-[color:var(--gold)] px-7 py-3.5 text-sm font-semibold text-[color:var(--bg-void)] transition hover:brightness-110"
+              className="rounded-full bg-[color:var(--gold)] px-7 py-3.5 text-sm font-semibold text-[color:var(--bg-void)] transition hover:brightness-110 hover:-translate-y-0.5"
             >
               Choose Your Path
             </Link>
             <Link
               href="#how-it-works"
-              className="rounded-full border border-[color:var(--hairline)] px-7 py-3.5 text-sm font-semibold text-[color:var(--ivory)] transition hover:border-[color:var(--gold)]/60"
+              className="rounded-full border border-[color:var(--hairline)] px-7 py-3.5 text-sm font-semibold text-[color:var(--ivory)] transition hover:border-[color:var(--gold)]/60 hover:-translate-y-0.5"
             >
               How Enrolment Works
             </Link>

@@ -30,7 +30,7 @@ export default function CourseModal({
 
   return (
     <div
-      className="fixed inset-0 z-[100] flex items-start justify-center overflow-y-auto bg-black/70 px-4 py-8 backdrop-blur-sm sm:items-center sm:py-12"
+      className="fixed inset-0 z-[100] flex items-start justify-center overflow-y-auto bg-black/70 px-4 py-8 backdrop-blur-sm animate-overlay-fade sm:items-center sm:py-12"
       role="dialog"
       aria-modal="true"
       aria-labelledby="course-modal-title"
@@ -38,7 +38,7 @@ export default function CourseModal({
         if (e.target === e.currentTarget) onClose();
       }}
     >
-      <div className="relative w-full max-w-2xl overflow-hidden rounded-3xl border border-[color:var(--hairline)] bg-[color:var(--bg-surface)] shadow-2xl">
+      <div className="relative w-full max-w-2xl overflow-hidden rounded-3xl border border-[color:var(--hairline)] bg-[color:var(--bg-surface)] shadow-2xl animate-modal-pop">
         <button
           onClick={onClose}
           aria-label="Close"
