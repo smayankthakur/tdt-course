@@ -8,7 +8,7 @@ const navLinks = [
   { label: "Reading", href: `${MAIN_SITE}/reading` },
   { label: "Course", href: "/", current: true },
   { label: "Kundli Milan", href: `${MAIN_SITE}/kundli-milan` },
-  { label: "Personal Reading", href: "https://thedivinetarotonline.co.in/" },
+  { label: "Personal Reading", href: "https://booking.thedivinetarotonline.com/" },
 ];
 
 export default function Header() {
