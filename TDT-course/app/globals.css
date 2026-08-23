@@ -1,0 +1,80 @@
+@import "tailwindcss";
+
+:root {
+  --bg-void: #100a1c;
+  --bg-surface: #180f2b;
+  --bg-surface-2: #211636;
+  --hairline: rgba(212, 175, 106, 0.14);
+  --ivory: #f4eefc;
+  --muted: #b3a3d1;
+  --purple: #6d28d9;
+  --purple-light: #a78bfa;
+  --gold: #d4af6a;
+  --gold-light: #ecd9a8;
+
+  --font-serif: Georgia, "Iowan Old Style", "Palatino Linotype", "URW Palladio L", Palatino, serif;
+  --font-sans: "Segoe UI", ui-sans-serif, system-ui, -apple-system, "Helvetica Neue", Arial, sans-serif;
+}
+
+@theme inline {
+  --color-void: var(--bg-void);
+  --color-surface: var(--bg-surface);
+  --color-ivory: var(--ivory);
+  --color-muted: var(--muted);
+  --color-purple: var(--purple);
+  --color-gold: var(--gold);
+  --font-serif: var(--font-serif);
+  --font-sans: var(--font-sans);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--bg-void);
+  color: var(--ivory);
+  font-family: var(--font-sans), system-ui, sans-serif;
+  background-image:
+    radial-gradient(ellipse 900px 500px at 15% -10%, rgba(109, 40, 217, 0.35), transparent 60%),
+    radial-gradient(ellipse 700px 500px at 100% 10%, rgba(212, 175, 106, 0.12), transparent 55%);
+}
+
+.font-serif {
+  font-family: var(--font-serif), "Georgia", serif;
+}
+
+::selection {
+  background: var(--gold);
+  color: var(--bg-void);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+:focus-visible {
+  outline: 2px solid var(--gold);
+  outline-offset: 3px;
+}
+
+.starfield {
+  background-image:
+    radial-gradient(1.5px 1.5px at 20px 30px, rgba(244,238,252,0.5), transparent),
+    radial-gradient(1.5px 1.5px at 120px 80px, rgba(244,238,252,0.35), transparent),
+    radial-gradient(1px 1px at 200px 20px, rgba(244,238,252,0.4), transparent),
+    radial-gradient(1.5px 1.5px at 260px 120px, rgba(244,238,252,0.3), transparent),
+    radial-gradient(1px 1px at 320px 60px, rgba(244,238,252,0.45), transparent),
+    radial-gradient(1.5px 1.5px at 380px 140px, rgba(244,238,252,0.3), transparent);
+  background-repeat: repeat;
+  background-size: 400px 200px;
+}
