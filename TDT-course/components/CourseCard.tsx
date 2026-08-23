@@ -12,14 +12,26 @@ export default function CourseCard({
   return (
     <div className="group relative flex flex-col overflow-hidden rounded-3xl border border-[color:var(--hairline)] bg-[color:var(--bg-surface)] transition hover:border-[color:var(--gold)]/50">
       <div className="relative flex h-40 items-center justify-center overflow-hidden bg-[color:var(--bg-surface-2)]">
-        <div
-          className="absolute inset-0 opacity-70"
-          style={{
-            background:
-              "radial-gradient(circle at 30% 20%, rgba(167,139,250,0.35), transparent 55%), radial-gradient(circle at 80% 80%, rgba(212,175,106,0.25), transparent 50%)",
-          }}
-        />
-        <Glyph name={course.glyph} className="relative h-20 w-20 text-[color:var(--gold-light,#ecd9a8)]" />
+        {course.image ? (
+          // eslint-disable-next-line @next/next/no-img-element
+          <img
+            src={course.image}
+            alt={course.title}
+            className="absolute inset-0 h-full w-full object-cover"
+          />
+        ) : (
+          <div
+            className="absolute inset-0 opacity-70"
+            style={{
+              background:
+                "radial-gradient(circle at 30% 20%, rgba(167,139,250,0.35), transparent 55%), radial-gradient(circle at 80% 80%, rgba(212,175,106,0.25), transparent 50%)",
+            }}
+          />
+        )}
+        {course.image && <div className="absolute inset-0 bg-black/25" />}
+        {!course.image && (
+          <Glyph name={course.glyph} className="relative h-20 w-20 text-[color:var(--gold-light,#ecd9a8)]" />
+        )}
         <span className="absolute left-4 top-4 rounded-full bg-black/30 px-3 py-1 text-[11px] font-medium uppercase tracking-wide text-[color:var(--ivory)] backdrop-blur">
           {course.tag}
         </span>

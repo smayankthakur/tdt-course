@@ -50,14 +50,26 @@ export default function CourseModal({
         </button>
 
         <div className="relative flex h-44 items-center justify-center overflow-hidden bg-[color:var(--bg-surface-2)] sm:h-52">
-          <div
-            className="absolute inset-0 opacity-70"
-            style={{
-              background:
-                "radial-gradient(circle at 25% 20%, rgba(167,139,250,0.35), transparent 55%), radial-gradient(circle at 80% 85%, rgba(212,175,106,0.28), transparent 50%)",
-            }}
-          />
-          <Glyph name={course.glyph} className="relative h-24 w-24 text-[color:var(--gold-light,#ecd9a8)] sm:h-28 sm:w-28" />
+          {course.image ? (
+            // eslint-disable-next-line @next/next/no-img-element
+            <img
+              src={course.image}
+              alt={course.title}
+              className="absolute inset-0 h-full w-full object-cover"
+            />
+          ) : (
+            <div
+              className="absolute inset-0 opacity-70"
+              style={{
+                background:
+                  "radial-gradient(circle at 25% 20%, rgba(167,139,250,0.35), transparent 55%), radial-gradient(circle at 80% 85%, rgba(212,175,106,0.28), transparent 50%)",
+              }}
+            />
+          )}
+          {course.image && <div className="absolute inset-0 bg-black/25" />}
+          {!course.image && (
+            <Glyph name={course.glyph} className="relative h-24 w-24 text-[color:var(--gold-light,#ecd9a8)] sm:h-28 sm:w-28" />
+          )}
         </div>
 
         <div className="max-h-[70vh] overflow-y-auto p-6 sm:p-8">

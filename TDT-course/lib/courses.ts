@@ -1,6 +1,7 @@
 export type Course = {
   slug: string;
   glyph: "moon" | "workshop" | "tarot" | "tarotPro" | "runes" | "dice" | "candle";
+  image?: string;
   tag: string;
   price: string;
   title: string;
@@ -61,6 +62,7 @@ export const courses: Course[] = [
   {
     slug: "tarot-beginning-to-advance",
     glyph: "tarot",
+    image: "https://learn.thedivinetarotonline.com/images/221f368322aa50b5adb8d520bdf3bbd0.png",
     tag: "Live Batch",
     price: "₹1,00,000",
     title: "Tarot: Beginner's to Advance",
@@ -87,6 +89,7 @@ export const courses: Course[] = [
   {
     slug: "tarot-pro",
     glyph: "tarotPro",
+    image: "https://learn.thedivinetarotonline.com/images/51960be84230e86eef749cd77a2fa332.png",
     tag: "Live Batch",
     price: "₹2,00,000",
     title: "Tarot Pro",
@@ -112,6 +115,7 @@ export const courses: Course[] = [
   {
     slug: "runes-beginning-to-advance",
     glyph: "runes",
+    image: "https://learn.thedivinetarotonline.com/images/e9d8e5d2ca0a71a727d32b6f406ce664.png",
     tag: "Live Batch",
     price: "₹1,00,000",
     title: "Runes: Beginner's to Advance",
@@ -137,6 +141,7 @@ export const courses: Course[] = [
   {
     slug: "dice-beginning-to-advance",
     glyph: "dice",
+    image: "https://learn.thedivinetarotonline.com/images/b3367a022978047af5b1c85224883ec6.png",
     tag: "Live Batch",
     price: "₹1,00,000",
     title: "Dice: Beginner's to Advance",
@@ -162,6 +167,7 @@ export const courses: Course[] = [
   {
     slug: "candle-wax-full-course",
     glyph: "candle",
+    image: "https://learn.thedivinetarotonline.com/images/dfb6d63143f19aac3492408c13ab48a1.jpg",
     tag: "Live Batch",
     price: "₹1,00,000",
     title: "Candle Wax Reading Course",

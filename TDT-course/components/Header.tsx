@@ -6,7 +6,7 @@ const navLinks = [
   { label: "Home", href: MAIN_SITE },
   { label: "About", href: `${MAIN_SITE}/about` },
   { label: "Reading", href: `${MAIN_SITE}/reading` },
-  { label: "Courses", href: "/", current: true },
+  { label: "Course", href: "/", current: true },
   { label: "Kundli Milan", href: `${MAIN_SITE}/kundli-milan` },
   { label: "Personal Reading", href: "https://thedivinetarotonline.co.in/" },
 ];
@@ -15,21 +15,19 @@ export default function Header() {
   return (
     <header className="sticky top-0 z-50 border-b border-[color:var(--hairline)] bg-[color:var(--bg-void)]/85 backdrop-blur-md">
       <div className="mx-auto flex max-w-6xl items-center justify-between gap-4 px-5 py-4 sm:px-8">
-        <Link href="/" className="group flex items-center gap-3">
-          <span className="flex h-9 w-9 items-center justify-center rounded-full border border-[color:var(--gold)]/60 text-[color:var(--gold)] transition group-hover:border-[color:var(--gold)]">
-            <svg viewBox="0 0 24 24" className="h-4 w-4" fill="none">
-              <path
-                d="M14 3a9 9 0 1 0 0 18 7 7 0 0 1 0-18Z"
-                fill="currentColor"
-              />
-            </svg>
-          </span>
+        <Link href={MAIN_SITE} className="group flex items-center gap-3">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src="https://thedivinetarotonline.com/logo.png"
+            alt="The Divine Tarot Logo"
+            className="h-9 w-9 rounded-full object-cover"
+          />
           <span className="leading-tight">
             <span className="block font-serif text-[17px] tracking-wide text-[color:var(--ivory)]">
               The Divine Tarot
             </span>
             <span className="block text-[10px] uppercase tracking-[0.22em] text-[color:var(--muted)]">
-              Courses &amp; Workshops
+              Premium Tarot Guidance
             </span>
           </span>
         </Link>
@@ -51,10 +49,10 @@ export default function Header() {
         </nav>
 
         <Link
-          href="#courses"
+          href={`${MAIN_SITE}/reading`}
           className="hidden shrink-0 rounded-full bg-[color:var(--gold)] px-5 py-2.5 text-sm font-semibold text-[color:var(--bg-void)] transition hover:brightness-110 sm:inline-block"
         >
-          View Batches
+          Ask your question here
         </Link>
 
         {/* Mobile nav */}
@@ -78,6 +76,12 @@ export default function Header() {
                 {link.label}
               </Link>
             ))}
+            <Link
+              href={`${MAIN_SITE}/reading`}
+              className="mt-1 block rounded-lg bg-[color:var(--gold)] px-3 py-2 text-sm font-semibold text-[color:var(--bg-void)]"
+            >
+              Ask your question here
+            </Link>
           </div>
         </details>
       </div>

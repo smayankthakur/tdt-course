@@ -1,12 +1,13 @@
 import Link from "next/link";
 import MoonPhases from "./MoonPhases";
+import NewsletterForm from "./NewsletterForm";
 
 const MAIN_SITE = "https://thedivinetarotonline.com";
 
 const quickLinks = [
   { label: "About", href: `${MAIN_SITE}/about` },
   { label: "Readings", href: `${MAIN_SITE}/reading` },
-  { label: "Kundli Milan", href: `${MAIN_SITE}/kundli-milan` },
+  { label: "Premium", href: `${MAIN_SITE}/reading?upgrade=1` },
 ];
 
 const socials = [
@@ -24,16 +25,21 @@ export default function Footer() {
         <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-4">
           <div>
             <div className="flex items-center gap-3">
-              <span className="flex h-9 w-9 items-center justify-center rounded-full border border-[color:var(--gold)]/60 text-[color:var(--gold)]">
-                <svg viewBox="0 0 24 24" className="h-4 w-4" fill="none">
-                  <path d="M14 3a9 9 0 1 0 0 18 7 7 0 0 1 0-18Z" fill="currentColor" />
-                </svg>
-              </span>
-              <span className="font-serif text-lg text-[color:var(--ivory)]">The Divine Tarot</span>
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src="https://thedivinetarotonline.com/logo.png"
+                alt="The Divine Tarot Logo"
+                className="h-9 w-9 rounded-full object-cover"
+              />
+              <div className="leading-tight">
+                <span className="block font-serif text-lg text-[color:var(--ivory)]">The Divine Tarot</span>
+                <span className="block text-[10px] uppercase tracking-[0.2em] text-[color:var(--muted)]">
+                  Premium Tarot Guidance
+                </span>
+              </div>
             </div>
             <p className="mt-4 text-sm leading-relaxed text-[color:var(--muted)]">
-              Live courses in tarot, runes, dice divination and candle wax reading — taught with
-              care, in small batches, by practitioners who still read every week.
+              Clarity for your path. Guidance for your soul.
             </p>
           </div>
 
@@ -74,20 +80,22 @@ export default function Footer() {
 
           <div>
             <h3 className="font-serif text-sm uppercase tracking-[0.18em] text-[color:var(--gold)]">
-              Stay Connected
+              Get Daily Divine Insights
             </h3>
             <p className="mt-4 text-sm text-[color:var(--muted)]">
               Follow along for batch dates and new course announcements.
             </p>
-            <div className="mt-4 flex flex-wrap gap-2 text-[11px] text-[color:var(--muted)]">
-              <span className="rounded-full border border-[color:var(--hairline)] px-3 py-1.5">Secure enrolment</span>
-              <span className="rounded-full border border-[color:var(--hairline)] px-3 py-1.5">Small live batches</span>
-              <span className="rounded-full border border-[color:var(--hairline)] px-3 py-1.5">Certified on completion</span>
-            </div>
+            <NewsletterForm />
           </div>
         </div>
 
-        <div className="mt-12 flex flex-col items-center justify-between gap-3 border-t border-[color:var(--hairline)] pt-6 text-xs text-[color:var(--muted)] sm:flex-row">
+        <div className="mt-12 flex flex-wrap items-center justify-center gap-2 text-[11px] text-[color:var(--muted)]">
+          <span className="rounded-full border border-[color:var(--hairline)] px-3 py-1.5">Secure &amp; Private Readings</span>
+          <span className="rounded-full border border-[color:var(--hairline)] px-3 py-1.5">Trusted by 7L+ Seekers</span>
+          <span className="rounded-full border border-[color:var(--hairline)] px-3 py-1.5">Authentic Spiritual Guidance</span>
+        </div>
+
+        <div className="mt-8 flex flex-col items-center justify-between gap-3 border-t border-[color:var(--hairline)] pt-6 text-xs text-[color:var(--muted)] sm:flex-row">
           <p>© {new Date().getFullYear()} The Divine Tarot. All readings and courses offered in good faith, for guidance and reflection.</p>
           <Link href={`${MAIN_SITE}/privacy`} className="transition hover:text-[color:var(--ivory)]">
             Privacy
