@@ -1,236 +1,199 @@
-export interface Course {
-  key: string;
+export type Course = {
   slug: string;
-  title: string;
-  badge: string;
-  accent: string;
+  glyph: "moon" | "workshop" | "tarot" | "tarotPro" | "runes" | "dice" | "candle";
+  image?: string;
+  tag: string;
   price: string;
-  image: string;
-  blurb: string;
+  title: string;
+  summary: string;
+  formatNote: string;
   schedule: string[];
   learn: string[];
   need: string[];
-  info: string;
-  paymentUrl: string;
-  formUrl: string;
-}
+  payLink: string;
+};
 
 export const courses: Course[] = [
   {
-    key: "healwithin",
     slug: "heal-within",
-    title: "Heal WITHIN (Offline)",
-    badge: "Offline · Membership",
-    accent: "#2c9678",
+    glyph: "moon",
+    image: "/courses/heal-within.png",
+    tag: "Offline · Membership",
     price: "₹15,000",
-    image: "/images/01-heal-within.svg",
-    blurb:
-      "Year-long offline healing membership — energy work, meditation, inner-child healing. Weekly in-person sessions to release old patterns and reconnect with yourself.",
-    schedule: ["Starts: 11 Oct", "Sun 4:00–7:00 PM", "1 year membership", "Location: TBC"],
+    title: "Heal WITHIN",
+    summary:
+      "A year-long, in-person healing circle — energy work, meditation and inner-child practice, held weekly so old patterns can loosen and you can meet yourself again.",
+    formatNote: "In-person, once a week, for a full year. Venue confirmed closer to the start date.",
+    schedule: ["Begins 11 Oct", "Sundays, 4:00–7:00 PM", "1-year membership", "Venue: to be confirmed"],
     learn: [
       "Energy healing & chakra balancing",
-      "Meditation & breathwork for daily grounding",
-      "Inner-child & shadow-work practices",
-      "Self-healing rituals for long-term use",
-      "Building a sustainable healing routine in a group setting",
+      "Meditation and breathwork for everyday grounding",
+      "Inner-child and shadow-work practice",
+      "Self-healing rituals you can keep using",
+      "Building a sustainable healing routine within a group",
     ],
     need: [
-      "Open mind, willingness to reflect",
-      "Journal for weekly notes",
-      "Comfortable clothing for seated/floor work",
-      "Consistent weekly attendance",
+      "An open mind and willingness to reflect",
+      "A journal for weekly notes",
+      "Comfortable clothing for floor / seated work",
+      "Steady weekly attendance",
     ],
-    info: "<b>Offline, in-person</b> — weekly Sundays for <b>1 year</b>. Venue TBC.",
-    paymentUrl: "https://rzp.io/rzp/JdMP80qp",
-    formUrl: "https://forms.gle/ZX8m5pNGpKHrnUwY7",
+    payLink: "https://rzp.io/rzp/JdMP80qp",
   },
   {
-    key: "tarotworkshop",
     slug: "tarot-workshop",
-    title: "Tarot Workshop",
-    badge: "Workshop",
-    accent: "#8b5cf6",
+    glyph: "workshop",
+    image: "/courses/tarot-workshop.png",
+    tag: "Workshop",
     price: "₹5,000",
-    image: "/images/02-tarot-workshop.svg",
-    blurb:
-      "One-day tarot intro for beginners — learn the language of the cards and pull your first real reading in an afternoon.",
-    schedule: ["11 Oct (Sun)", "12:30–2:30 PM", "1 day, 2 hours"],
+    title: "Tarot Workshop",
+    summary:
+      "A single afternoon to meet the deck properly — how the cards are structured, how to shuffle with intention, and how to pull your first honest reading.",
+    formatNote: "A one-time, single-day session — no recordings, no ongoing access.",
+    schedule: ["11 Oct (Sun)", "12:30–2:30 PM", "1 day · 2 hours"],
     learn: [
       "Deck structure: Major & Minor Arcana",
-      "Shuffling, cutting, drawing with intention",
-      "Reading a first 3-card spread",
-      "Common beginner mistakes",
-      "Where to go next",
+      "Shuffling, cutting and drawing with intention",
+      "Reading your first 3-card spread",
+      "Common beginner mistakes to avoid",
+      "Where to go next in your practice",
     ],
-    need: [
-      "No experience required",
-      "A tarot deck (guidance shared beforehand)",
-      "Notebook & pen",
-    ],
-    info: "Single-day, 2-hour <b>workshop</b> — one-time session, no ongoing access.",
-    paymentUrl: "https://rzp.io/rzp/UsKBd1F",
-    formUrl: "https://forms.gle/avdYDMycGPsmHoiq6",
+    need: ["No prior experience needed", "A tarot deck (guidance shared beforehand)", "Notebook & pen"],
+    payLink: "https://rzp.io/rzp/UsKBd1F",
   },
   {
-    key: "tarotBatchBeginAdv",
     slug: "tarot-beginning-to-advance",
-    title: "Tarot: Beginning to Advance",
-    badge: "Live Batch",
-    accent: "#e6c063",
+    glyph: "tarot",
+    image: "/courses/tarot-beginning-to-advance.png",
+    tag: "Live Batch",
     price: "₹1,00,000",
-    image: "/images/03-tarot-beginning-to-advance.svg",
-    blurb:
-      "4-month live batch from first card pull to reading confidently for others — exams, live practice, a full year of recordings.",
+    title: "Tarot: Beginner's to Advance",
+    summary:
+      "A four-month live journey from your first card pull to reading confidently for other people — full arcana, live practice, exams and a year of recordings to fall back on.",
+    formatNote: "Live batch, 4 months. Includes exams, practice sessions, live Q&A and 1-year video access.",
     schedule: [
       "23 Oct – 7 Feb",
       "Fri & Sat 8–10 PM, Sun 12–2 PM",
       "4 months",
-      "Exams, practice, Q&A, 1-yr video access",
+      "Exams, practice, Q&A, 1-year video access",
     ],
     learn: [
       "Full Major & Minor Arcana meanings",
-      "Card combinations, spreads, layouts",
-      "Reversed cards",
-      "Reading for self vs. others — ethics",
-      "Practice, mock readings, live Q&A",
+      "Card combinations, spreads and layouts",
+      "Reading reversed cards",
+      "Reading for yourself vs. reading for others — ethics",
+      "Practice sessions, mock readings & live Q&A",
       "Exam-based assessment",
     ],
-    need: [
-      "A tarot deck",
-      "Notebook",
-      "Reliable internet (Fri/Sat/Sun)",
-      "Practice between classes",
-    ],
-    info: "<b>Live batch</b> — 4 months, Fri & Sat 8–10 PM, Sun 12–2 PM. Exams, practice, Q&A, <b>1-yr</b> video access.",
-    paymentUrl: "https://rzp.io/rzp/fWD6L2a",
-    formUrl: "https://forms.gle/XScdePbyh4YP7BiX6",
+    need: ["A tarot deck", "Notebook", "Reliable internet on Fri/Sat/Sun", "Willingness to practice between classes"],
+    payLink: "https://rzp.io/rzp/fWD6L2a",
   },
   {
-    key: "tarotPro",
     slug: "tarot-pro",
-    title: "Tarot Pro",
-    badge: "Live Batch",
-    accent: "#e6c063",
+    glyph: "tarotPro",
+    image: "/courses/tarot-pro.png",
+    tag: "Live Batch",
     price: "₹2,00,000",
-    image: "/images/04-tarot-pro.svg",
-    blurb:
-      "Advanced continuation for Beginner-to-Advance graduates — sharpen intuition, refine complex spreads, prepare to read professionally.",
+    title: "Tarot Pro",
+    summary:
+      "The advanced continuation for graduates of Beginner's to Advance — sharpening intuition, refining complex spreads and building the confidence to read professionally.",
+    formatNote: "Live batch, 2 months (6 months total when paired with the Beginner's batch).",
     schedule: [
       "12 Feb – 11 Apr",
       "Fri & Sat 8–10 PM, Sun 12–2 PM",
-      "2 months (6 months total with Beginner batch)",
-      "Exams, practice, Q&A, 1-yr video access",
+      "2 months (6 months total with Beginner's batch)",
+      "Exams, practice, Q&A, 1-year video access",
     ],
     learn: [
-      "Advanced spreads: career, relationships, life-path",
-      "Combining tarot with deeper intuitive technique",
+      "Advanced spreads for career, relationships and life-path",
+      "Blending tarot with deeper intuitive technique",
       "Client-consultation skills",
-      "Handling sensitive questions with care",
-      "Confidence to read professionally",
+      "Holding sensitive questions with care",
+      "Confidence to read for others professionally",
     ],
-    need: [
-      "Completion of Beginner to Advance (or equivalent)",
-      "A deck you're comfortable with",
-      "Consistent attendance",
-    ],
-    info: "<b>Live batch</b> — 2 months (6 months total with Beginner batch). Fee for this batch: <b>₹2,00,000</b>.",
-    paymentUrl: "https://rzp.io/rzp/uNgw2T4",
-    formUrl: "https://forms.gle/eWUgVgoS7rHm1b2g7",
+    need: ["Completion of Beginner's to Advance (or equivalent)", "A deck you're comfortable with", "Consistent attendance"],
+    payLink: "https://rzp.io/rzp/uNgw2T4",
   },
   {
-    key: "runesBatch",
     slug: "runes-beginning-to-advance",
-    title: "Runes: Beginning to Advance",
-    badge: "Live Batch",
-    accent: "#ff5a3c",
+    glyph: "runes",
+    image: "/courses/runes-beginning-to-advance.png",
+    tag: "Live Batch",
     price: "₹1,00,000",
-    image: "/images/05-runes-beginning-to-advance.svg",
-    blurb:
-      "Ancient Nordic rune reading — from casting your first stones to advanced spreads, over a 3-month live batch.",
+    title: "Runes: Beginner's to Advance",
+    summary:
+      "The old Nordic practice of rune-casting, taught from your first single-stone draw through to layered, advanced spreads, across a three-month live batch.",
+    formatNote: "Live batch, 3 months. Includes exams, practice sessions, live Q&A and 1-year video access.",
     schedule: [
       "24 Apr – 11 Jul",
       "Sat 8–10 PM, Sun 12–2 PM",
       "3 months",
-      "Exams, practice, Q&A, 1-yr video access",
+      "Exams, practice, Q&A, 1-year video access",
     ],
     learn: [
       "Elder Futhark rune meanings & history",
-      "Casting & interpreting single-rune draws",
-      "Multi-rune spreads (love, career, life)",
-      "Reversed/merkstave interpretation",
-      "Practice & live Q&A",
+      "Casting and interpreting single-rune draws",
+      "Multi-rune spreads for love, career and life",
+      "Reversed / merkstave interpretation",
+      "Practice sessions & live Q&A",
     ],
-    need: ["A rune set (guidance shared beforehand)", "Notebook", "Reliable internet (Sat/Sun)"],
-    info: "<b>Live batch</b> — 3 months, Sat 8–10 PM, Sun 12–2 PM. Exams, practice, Q&A, <b>1-yr</b> video access.",
-    paymentUrl: "https://rzp.io/rzp/wfh8B9vv",
-    formUrl: "https://forms.gle/V88qxjTv1g5w6iiKA",
+    need: ["A rune set (guidance shared beforehand)", "Notebook", "Reliable internet on Sat/Sun"],
+    payLink: "https://rzp.io/rzp/wfh8B9vv",
   },
   {
-    key: "diceBatch",
     slug: "dice-beginning-to-advance",
-    title: "Dice: Beginning to Advance",
-    badge: "Live Batch",
-    accent: "#e24b6a",
+    glyph: "dice",
+    image: "/courses/dice-beginning-to-advance.png",
+    tag: "Live Batch",
     price: "₹1,00,000",
-    image: "/images/06-dice-beginning-to-advance.svg",
-    blurb:
-      "Hands-on 3-month live batch in dice divination — from basic throws to advanced interpretation.",
+    title: "Dice: Beginner's to Advance",
+    summary:
+      "A hands-on three-month batch in dice divination — starting with basic throws and number symbolism, building up to advanced, layered interpretation.",
+    formatNote: "Live batch, 3 months. Includes exams, practice sessions, live Q&A and 1-year video access.",
     schedule: [
       "24 Jul – 10 Oct",
       "Sat 8–10 PM, Sun 12–2 PM",
       "3 months",
-      "Exams, practice, Q&A, 1-yr video access",
+      "Exams, practice, Q&A, 1-year video access",
     ],
     learn: [
       "Dice divination fundamentals & number symbolism",
-      "Single/double/triple throw setups",
-      "Combining dice with intuitive guidance",
-      "Practical real-life exercises",
+      "Single, double and triple throw setups",
+      "Blending dice with intuitive guidance",
+      "Practical, real-life reading exercises",
       "Exams & live practice",
     ],
-    need: ["A dice set (details shared beforehand)", "Notebook", "Reliable internet (Sat/Sun)"],
-    info: "<b>Live batch</b> — 3 months, Sat 8–10 PM, Sun 12–2 PM. Exams, practice, Q&A, <b>1-yr</b> video access.",
-    paymentUrl: "https://rzp.io/rzp/s7XosLAt",
-    formUrl: "https://forms.gle/kKw2n49ezfsArUqJ9",
+    need: ["A dice set (details shared beforehand)", "Notebook", "Reliable internet on Sat/Sun"],
+    payLink: "https://rzp.io/rzp/s7XosLAt",
   },
   {
-    key: "candleBatch",
     slug: "candle-wax-full-course",
-    title: "Candle Wax Full Course",
-    badge: "Live Batch",
-    accent: "#ff9d4d",
+    glyph: "candle",
+    image: "/courses/candle-wax-full-course.png",
+    tag: "Live Batch",
     price: "₹1,00,000",
-    image: "/images/07-candle-wax-full-course.svg",
-    blurb:
-      "~2-month live batch in ceromancy — interpreting the shapes candle wax leaves behind for intuitive, symbolic guidance.",
+    title: "Candle Wax Reading Course",
+    summary:
+      "Roughly two months live, learning ceromancy — the art of reading the shapes candle wax leaves behind in water, for intuitive, symbolic guidance.",
+    formatNote: "Live batch, ~2 months. Includes exams, practice sessions, live Q&A and 1-year video access.",
     schedule: [
       "6 Nov – 26 Dec",
       "Sat 8–10 PM, Sun 12–2 PM",
       "~2 months",
-      "Exams, practice, Q&A, 1-yr video access",
+      "Exams, practice, Q&A, 1-year video access",
     ],
     learn: [
-      "Ceromancy basics",
-      "Reading shapes/patterns/symbols in wax",
+      "Ceromancy fundamentals",
+      "Reading shapes, patterns & symbols in wax",
       "Setting up a safe wax-reading session",
-      "Interpreting readings for different questions",
-      "Practice, exams, live Q&A",
+      "Interpreting readings for different kinds of questions",
+      "Practice, exams & live Q&A",
     ],
-    need: [
-      "Candles, heatproof bowl of water, safe workspace (list shared beforehand)",
-      "Notebook",
-      "Reliable internet (Sat/Sun)",
-    ],
-    info: "<b>Live batch</b> — ~2 months, Sat 8–10 PM, Sun 12–2 PM. Exams, practice, Q&A, <b>1-yr</b> video access.",
-    paymentUrl: "https://rzp.io/rzp/nmDQu8QA",
-    formUrl: "https://forms.gle/1sKFhUei73Muke7D9",
+    need: ["Candles, a heatproof bowl of water, a safe workspace (full list shared beforehand)", "Notebook", "Reliable internet on Sat/Sun"],
+    payLink: "https://rzp.io/rzp/nmDQu8QA",
   },
 ];
 
-export function getCourseBySlug(slug: string): Course | undefined {
+export function getCourse(slug: string) {
   return courses.find((c) => c.slug === slug);
-}
-
-export function getCourseByKey(key: string): Course | undefined {
-  return courses.find((c) => c.key === key);
 }

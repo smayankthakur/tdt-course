@@ -1,65 +1,36 @@
-# The Divine Tarot — Booking Site (Next.js)
+This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
-A short, fast, single-page booking site for a personal Call Reading.
+## Getting Started
 
-## How booking works now (simplified)
-
-This version does **not** use Razorpay's Checkout SDK/API — that path was
-hitting a persistent `SERVER_ERROR` on Razorpay's own UPI QR generation
-endpoint (server-side, on their infrastructure, not fixable from this app).
-
-Instead:
-
-1. Visitor clicks **"Pay ₹8,500 on Razorpay"** → opens your real hosted
-   Razorpay Payment Page (`rzp.io/rzp/8A6T0cz`) in a new tab. Whatever
-   payment methods Razorpay enables on that hosted page (UPI, Cards,
-   Netbanking, etc.) are available there — this app has no control over it.
-2. Visitor pays, comes back, and clicks **"I've Completed My Payment."**
-   This is a self-reported confirmation — there is no webhook or backend
-   verifying it actually happened, because this app no longer creates
-   orders or talks to the Razorpay API at all.
-3. On confirming, the **Google Form** link is shown directly in-page so
-   they can fill in their appointment details.
-
-**Trade-off to be aware of:** because there's no order/verification step,
-there's also no automatic "payment received" email — if you want that back,
-you'd need a server-side Razorpay webhook (Razorpay calls your server when
-a payment on that hosted page succeeds) rather than the old Checkout SDK
-approach, since the hosted Payment Page doesn't return control to this app
-the way the SDK modal did.
-
-## What's configurable
-
-Both links live in `.env.local` (copy from `.env.local.example`):
-
-```
-NEXT_PUBLIC_RAZORPAY_PAY_URL=https://rzp.io/rzp/8A6T0cz
-NEXT_PUBLIC_GOOGLE_FORM_URL=https://docs.google.com/forms/d/e/.../viewform
-```
-
-Change either without touching code — just update `.env.local` (locally)
-or the environment variables in Vercel (deployed), then redeploy.
-
-## Setup
+First, run the development server:
 
 ```bash
-npm install
-cp .env.local.example .env.local
 npm run dev
+# or
+yarn dev
+# or
+pnpm dev
+# or
+bun dev
 ```
 
-Visit `http://localhost:3000`.
+Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-## Deploy
+You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
 
-Works out of the box on Vercel — no secrets required anymore (no Razorpay
-key/secret, no SMTP credentials). Just set the two `NEXT_PUBLIC_*` vars
-above in Project Settings → Environment Variables.
+This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
 
-## Files of interest
+## Learn More
 
-- `app/page.tsx` — the entire single page (hero, pricing, pay/confirm flow,
-  notes, footer)
-- `app/globals.css` — theme/styling
-- No `app/api/*` routes and no `lib/*` server helpers anymore — this app is
-  fully static/client-side now.
+To learn more about Next.js, take a look at the following resources:
+
+- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
+- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+
+You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+
+## Deploy on Vercel
+
+The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+
+Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
