@@ -2,7 +2,13 @@ import Link from "next/link";
 import type { Course } from "@/lib/courses";
 import Glyph from "./Glyph";
 
-export default function CourseCard({ course }: { course: Course }) {
+export default function CourseCard({
+  course,
+  onOpenDetails,
+}: {
+  course: Course;
+  onOpenDetails: () => void;
+}) {
   return (
     <div className="group relative flex flex-col overflow-hidden rounded-3xl border border-[color:var(--hairline)] bg-[color:var(--bg-surface)] transition hover:border-[color:var(--gold)]/50">
       <div className="relative flex h-40 items-center justify-center overflow-hidden bg-[color:var(--bg-surface-2)]">
@@ -44,12 +50,12 @@ export default function CourseCard({ course }: { course: Course }) {
           >
             Pay &amp; Enrol ✨
           </Link>
-          <Link
-            href={`/courses/${course.slug}`}
+          <button
+            onClick={onOpenDetails}
             className="inline-flex items-center gap-1 text-sm font-medium text-[color:var(--purple-light,#a78bfa)] underline decoration-transparent underline-offset-4 transition hover:decoration-current"
           >
             Course details →
-          </Link>
+          </button>
         </div>
       </div>
     </div>

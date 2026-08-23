@@ -1,6 +1,5 @@
 import Link from "next/link";
-import { courses } from "@/lib/courses";
-import CourseCard from "@/components/CourseCard";
+import CoursesGrid from "@/components/CoursesGrid";
 import MoonPhases from "@/components/MoonPhases";
 
 const steps = [
@@ -112,10 +111,8 @@ export default function Home() {
             </p>
           </div>
 
-          <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            {courses.map((course) => (
-              <CourseCard key={course.slug} course={course} />
-            ))}
+          <div className="mt-12">
+            <CoursesGrid />
           </div>
         </div>
       </section>
