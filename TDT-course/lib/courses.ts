@@ -220,9 +220,11 @@ export function getStartDate(course: Course): Date {
   return new Date(`${course.startDate}T00:00:00`);
 }
 
-/** Bookings close this many days before the course starts. */
+/** Bookings close at 11:59 PM on the day that is N days before the course starts. */
 export function getBookingEndDate(course: Course): Date {
-  return new Date(getStartDate(course).getTime() - BOOKING_CUTOFF_DAYS * MS_PER_DAY);
+  const cutoff = new Date(getStartDate(course).getTime() - BOOKING_CUTOFF_DAYS * MS_PER_DAY);
+  cutoff.setHours(23, 59, 59, 999); // stays open through the whole cutoff day, closes at 11:59 PM
+  return cutoff;
 }
 
 /** True if a manual override is set, or the booking cutoff date has passed. */
@@ -231,11 +233,12 @@ export function isBookingClosed(course: Course, now: Date = new Date()): boolean
   return now.getTime() > getBookingEndDate(course).getTime();
 }
 
-/** Human-readable booking cutoff date, e.g. "9 Oct 2026". */
+/** Human-readable booking cutoff, e.g. "9 Oct 2026, 11:59 PM". */
 export function formatBookingEndDate(course: Course): string {
-  return getBookingEndDate(course).toLocaleDateString("en-IN", {
+  const datePart = getBookingEndDate(course).toLocaleDateString("en-IN", {
     day: "numeric",
     month: "short",
     year: "numeric",
   });
+  return `${datePart}, 11:59 PM`;
 }
