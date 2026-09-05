@@ -1,5 +1,5 @@
-import Link from "next/link";
-import type { Course } from "@/lib/courses";
+import { isBookingClosed, type Course } from "@/lib/courses";
+import BookingStatus from "./BookingStatus";
 import Glyph from "./Glyph";
 
 export default function CourseCard({
@@ -9,6 +9,8 @@ export default function CourseCard({
   course: Course;
   onOpenDetails: () => void;
 }) {
+  const closed = isBookingClosed(course);
+
   return (
     <div className="group relative flex flex-col overflow-hidden rounded-3xl border border-[color:var(--hairline)] bg-[color:var(--bg-surface)] transition-all duration-300 hover:-translate-y-1.5 hover:border-[color:var(--gold)]/50 hover:shadow-[0_20px_45px_-15px_rgba(212,175,106,0.25)]">
       <div className="relative flex h-40 items-center justify-center overflow-hidden bg-[color:var(--bg-surface-2)]">
@@ -28,7 +30,7 @@ export default function CourseCard({
             }}
           />
         )}
-        {course.image && <div className="absolute inset-0 bg-black/25" />}
+        {course.image && <div className={`absolute inset-0 ${closed ? "bg-black/55" : "bg-black/25"}`} />}
         {!course.image && (
           <Glyph name={course.glyph} className="relative h-20 w-20 text-[color:var(--gold-light,#ecd9a8)]" />
         )}
@@ -38,6 +40,11 @@ export default function CourseCard({
         <span className="absolute right-4 top-4 rounded-full bg-[color:var(--gold)] px-3 py-1 text-[11px] font-bold text-[color:var(--bg-void)]">
           {course.price}
         </span>
+        {closed && (
+          <span className="absolute inset-x-0 bottom-0 bg-black/60 py-2 text-center text-xs font-bold uppercase tracking-[0.2em] text-[color:var(--ivory)] backdrop-blur">
+            🔒 Booking Closed!
+          </span>
+        )}
       </div>
 
       <div className="flex flex-1 flex-col p-6">
@@ -54,14 +61,7 @@ export default function CourseCard({
         </ul>
 
         <div className="mt-6 flex flex-wrap items-center gap-3">
-          <Link
-            href={course.payLink}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center gap-1.5 rounded-full bg-[color:var(--gold)] px-5 py-2.5 text-sm font-semibold text-[color:var(--bg-void)] transition hover:brightness-110"
-          >
-            Pay &amp; Enrol ✨
-          </Link>
+          <BookingStatus course={course} size="sm" />
           <button
             onClick={onOpenDetails}
             className="inline-flex items-center gap-1 text-sm font-medium text-[color:var(--purple-light,#a78bfa)] underline decoration-transparent underline-offset-4 transition hover:decoration-current"

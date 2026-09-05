@@ -1,8 +1,8 @@
 "use client";
 
 import { useEffect } from "react";
-import Link from "next/link";
-import type { Course } from "@/lib/courses";
+import { isBookingClosed, type Course } from "@/lib/courses";
+import BookingStatus from "./BookingStatus";
 import Glyph from "./Glyph";
 
 export default function CourseModal({
@@ -27,6 +27,8 @@ export default function CourseModal({
   }, [course, onClose]);
 
   if (!course) return null;
+
+  const closed = isBookingClosed(course);
 
   return (
     <div
@@ -80,6 +82,11 @@ export default function CourseModal({
             <span className="rounded-full bg-[color:var(--gold)] px-3 py-1 text-[11px] font-bold text-[color:var(--bg-void)]">
               {course.price}
             </span>
+            {closed && (
+              <span className="rounded-full border border-[color:var(--hairline)] bg-white/5 px-3 py-1 text-[11px] font-bold uppercase tracking-wide text-[color:var(--muted)]">
+                🔒 Booking Closed!
+              </span>
+            )}
           </div>
 
           <h2 id="course-modal-title" className="mt-4 font-serif text-3xl text-[color:var(--ivory)] sm:text-4xl">
@@ -130,14 +137,7 @@ export default function CourseModal({
           </div>
 
           <div className="mt-8 flex flex-wrap items-center gap-4 border-t border-[color:var(--hairline)] pt-6">
-            <Link
-              href={course.payLink}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 rounded-full bg-[color:var(--gold)] px-7 py-3.5 text-sm font-semibold text-[color:var(--bg-void)] transition hover:brightness-110"
-            >
-              Pay &amp; Enrol ✨
-            </Link>
+            <BookingStatus course={course} />
             <button
               onClick={onClose}
               className="text-sm font-medium text-[color:var(--muted)] underline decoration-transparent underline-offset-4 transition hover:text-[color:var(--ivory)] hover:decoration-current"

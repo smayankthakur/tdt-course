@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { courses, getCourse } from "@/lib/courses";
+import { courses, getCourse, isBookingClosed } from "@/lib/courses";
+import BookingStatus from "@/components/BookingStatus";
 import Glyph from "@/components/Glyph";
 
 export function generateStaticParams() {
@@ -21,6 +22,8 @@ export default async function CoursePage({ params }: { params: Promise<{ slug: s
   const { slug } = await params;
   const course = getCourse(slug);
   if (!course) notFound();
+
+  const closed = isBookingClosed(course);
 
   return (
     <section className="px-5 py-14 sm:px-8 sm:py-20">
@@ -50,6 +53,11 @@ export default async function CoursePage({ params }: { params: Promise<{ slug: s
           <span className="rounded-full bg-[color:var(--gold)] px-3 py-1 text-[11px] font-bold text-[color:var(--bg-void)]">
             {course.price}
           </span>
+          {closed && (
+            <span className="rounded-full border border-[color:var(--hairline)] bg-white/5 px-3 py-1 text-[11px] font-bold uppercase tracking-wide text-[color:var(--muted)]">
+              🔒 Booking Closed!
+            </span>
+          )}
         </div>
 
         <h1 className="mt-4 font-serif text-4xl text-[color:var(--ivory)] sm:text-5xl">{course.title}</h1>
@@ -98,14 +106,7 @@ export default async function CoursePage({ params }: { params: Promise<{ slug: s
         </div>
 
         <div className="mt-12 flex flex-wrap items-center gap-4 border-t border-[color:var(--hairline)] pt-8">
-          <Link
-            href={course.payLink}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 rounded-full bg-[color:var(--gold)] px-7 py-3.5 text-sm font-semibold text-[color:var(--bg-void)] transition hover:brightness-110"
-          >
-            Pay &amp; Enrol ✨
-          </Link>
+          <BookingStatus course={course} />
           <Link
             href="/#courses"
             className="text-sm font-medium text-[color:var(--muted)] underline decoration-transparent underline-offset-4 transition hover:text-[color:var(--ivory)] hover:decoration-current"

@@ -11,6 +11,10 @@ export type Course = {
   learn: string[];
   need: string[];
   payLink: string;
+  /** ISO date (YYYY-MM-DD) the course/batch begins. Used to compute the booking cutoff. */
+  startDate: string;
+  /** Manual override — forces "Booking Closed!" regardless of date. Used to close a batch early. */
+  bookingClosed?: boolean;
 };
 
 export const courses: Course[] = [
@@ -24,7 +28,9 @@ export const courses: Course[] = [
     summary:
       "A year-long, in-person healing circle — energy work, meditation and inner-child practice, held weekly so old patterns can loosen and you can meet yourself again.",
     formatNote: "In-person, once a week, for a full year. Venue confirmed closer to the start date.",
-    schedule: ["Begins 11 Oct", "Sundays, 4:00–7:00 PM", "1-year membership", "Venue: to be confirmed"],
+    schedule: ["Begins 15 Nov", "Sundays, 4:00–7:00 PM", "1-year membership", "Venue: to be confirmed"],
+    startDate: "2026-11-15",
+    bookingClosed: true,
     learn: [
       "Energy healing & chakra balancing",
       "Meditation and breathwork for everyday grounding",
@@ -51,6 +57,7 @@ export const courses: Course[] = [
       "A single afternoon to meet the deck properly — how the cards are structured, how to shuffle with intention, and how to pull your first honest reading.",
     formatNote: "A one-time, single-day session — no recordings, no ongoing access.",
     schedule: ["11 Oct (Sun)", "12:30–2:30 PM", "1 day · 2 hours"],
+    startDate: "2026-10-11",
     learn: [
       "Deck structure: Major & Minor Arcana",
       "Shuffling, cutting and drawing with intention",
@@ -77,6 +84,7 @@ export const courses: Course[] = [
       "4 months",
       "Exams, practice, Q&A, 1-year video access",
     ],
+    startDate: "2026-10-23",
     learn: [
       "Full Major & Minor Arcana meanings",
       "Card combinations, spreads and layouts",
@@ -104,6 +112,7 @@ export const courses: Course[] = [
       "2 months (6 months total with Beginner's batch)",
       "Exams, practice, Q&A, 1-year video access",
     ],
+    startDate: "2027-02-12",
     learn: [
       "Advanced spreads for career, relationships and life-path",
       "Blending tarot with deeper intuitive technique",
@@ -130,6 +139,7 @@ export const courses: Course[] = [
       "3 months",
       "Exams, practice, Q&A, 1-year video access",
     ],
+    startDate: "2027-04-24",
     learn: [
       "Elder Futhark rune meanings & history",
       "Casting and interpreting single-rune draws",
@@ -156,6 +166,7 @@ export const courses: Course[] = [
       "3 months",
       "Exams, practice, Q&A, 1-year video access",
     ],
+    startDate: "2027-07-24",
     learn: [
       "Dice divination fundamentals & number symbolism",
       "Single, double and triple throw setups",
@@ -182,6 +193,7 @@ export const courses: Course[] = [
       "~2 months",
       "Exams, practice, Q&A, 1-year video access",
     ],
+    startDate: "2027-11-06",
     learn: [
       "Ceromancy fundamentals",
       "Reading shapes, patterns & symbols in wax",
@@ -196,4 +208,34 @@ export const courses: Course[] = [
 
 export function getCourse(slug: string) {
   return courses.find((c) => c.slug === slug);
+}
+
+const MS_PER_DAY = 24 * 60 * 60 * 1000;
+
+/** How many days before the start date bookings must close. */
+export const BOOKING_CUTOFF_DAYS = 2;
+
+/** The course's start date as a Date object (local midnight). */
+export function getStartDate(course: Course): Date {
+  return new Date(`${course.startDate}T00:00:00`);
+}
+
+/** Bookings close this many days before the course starts. */
+export function getBookingEndDate(course: Course): Date {
+  return new Date(getStartDate(course).getTime() - BOOKING_CUTOFF_DAYS * MS_PER_DAY);
+}
+
+/** True if a manual override is set, or the booking cutoff date has passed. */
+export function isBookingClosed(course: Course, now: Date = new Date()): boolean {
+  if (course.bookingClosed) return true;
+  return now.getTime() > getBookingEndDate(course).getTime();
+}
+
+/** Human-readable booking cutoff date, e.g. "9 Oct 2026". */
+export function formatBookingEndDate(course: Course): string {
+  return getBookingEndDate(course).toLocaleDateString("en-IN", {
+    day: "numeric",
+    month: "short",
+    year: "numeric",
+  });
 }
